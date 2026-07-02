@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Kiara Optometry — Lens Selector</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+--forest:   #303030;   /* black */
+--forest-d: #B3B3B3;   /* dark grey */
+--forest-l: #d8d8d8;   /* grey */
+
+--gold:     #ff0000;   /* red */
+--gold-l:   #0000ff;   /* blue */
+
+--cream:    #d8d8d8;   /* blue */
+--paper:    #faf8f4;   /* light grey */
+
+--ink:      #303030;   /* black */
+
+--mist:     rgba(0,0,0,0.06);
+--line:     rgba(0,0,0,0.25);
+--glass:    rgba(255,255,255,0.72);
+
+--shadow:   0 4px 32px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+--shadow-l: 0 2px 12px rgba(0,0,0,0.07);
+
+--radius:   14px;
+--radius-s: 8px;
+}
+
+* {
+  font-family: 'DM Sans',-serif !important;
+  font-style: normal !important;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 50%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: white;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  
+}
+
+.lensMask{
+  position:absolute;
+  top:50px;              /* skip power label */
+  bottom:0;
+  background: #fff;
+  backdrop-filter: blur(1.5px);
+}
+
+
+
+/* Grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url('https://github.com/sp-rx/OL-selector/blob/main/bg.jpg?raw=true') top left / cover no-repeat;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Background decorative element */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#copyToggleBtn.active {
+  background: red;
+  color: white;
+  border-color: red;
+}
+
+.wrap {
+  width: 92%;
+  max-width: 1040px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 80px;
+}
+
+/* ── HEADER ── */
+.site-header {
+  padding: 24px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.header-title {
+  font-family: 'DM+Serif+Display', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--forest);
+  line-height: 1;
+}
+
+.header-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.header-ornament {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.4;
+}
+
+.header-ornament::before,
+.header-ornament::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--forest);
+}
+
+.toggleBtnoffice.active {
+  background: #0B3D6E !important;
+  color: white !important;
+  border-color: red !important;
+}
+
+.toggleBtn.active {
+  background: red !important;
+  color: white !important;
+  border-color: red !important;
+}
+
+.header-ornament svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--forest);
+}
+
+/* ── CARDS / SECTIONS ── */
+.section {
+  background: var(--paper);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 16px 0;
+  box-shadow: var(--shadow-l);
+  transition: box-shadow 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  font-family: 'DM+Serif+Display', serif;
+  font-size: 1.45rem;
+  font-weight: 400;
+  color: var(--forest);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line), transparent);
+}
+
+.index-result {
+  font-family: 'DM+Serif+Display', serif;
+  font-style: italic;
+  color: var(--gold);
+  font-size: 1.6rem;
+}
+
+/* ── FORM ELEMENTS ── */
+label {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+label:first-child { margin-top: 0; }
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 9px 13px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(200,169,110,0.35);
+  border-radius: var(--radius-s);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 300;
+  color: var(--ink);
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.98);
+  box-shadow: 0 0 0 3px rgba(200,169,110,0.12);
+}
+
+textarea { min-height: 48px; resize: vertical; }
+
+/* Inline RX inputs */
+.rx-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.rx-row .rx-label {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  min-width: 120px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.rx-row input {
+  width: 72px !important;
+  text-align: center;
+  padding: 8px 6px;
+}
+
+.rx-row .sep {
+  color: var(--gold);
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+.rx-row select {
+  width: auto;
+  min-width: 160px;
+  padding: 8px 10px;
+}
+
+/* ── BUTTONS ── */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+button.normal,
+button.small,
+button.btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: var(--radius-s);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button.normal {
+  background: var(--forest);
+  color: var(--cream);
+  border: 1px solid transparent;
+  padding: 10px 22px;
+  min-width: 30px;
+}
+
+button.normal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,169,110,0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+button.normal:hover {
+  background: var(--forest-d);
+  color: black;
+
+  border-color: var(--gold);
+  box-shadow: 0 4px 16px rgba(11,61,46,0.2);
+  transform: translateY(-1px);
+}
+
+button.normal:hover::before { opacity: 1; }
+button.normal:active { transform: translateY(0); box-shadow: none; }
+
+button.small {
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 7px 14px;
+}
+
+button.small:hover {
+  background: var(--mist);
+  border-color: var(--gold);
+}
+
+/* Gold accent button variant */
+button.btn-gold {
+  background: var(--gold);
+  color: var(--forest-d);
+  border: none;
+  padding: 10px 22px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: var(--radius-s);
+  transition: all 0.25s;
+}
+
+button.btn-gold:hover {
+  background: var(--gold-l);
+  box-shadow: 0 4px 16px rgba(200,169,110,0.35);
+  transform: translateY(-1px);
+}
+
+/* Danger variant */
+button[style*="maroon"],
+button[style*="background-color:maroon"] {
+  background: #7a1c1c !important;
+  border-color: rgba(200,100,100,0.3) !important;
+}
+
+button[style*="#191919"],
+button[style*="background-color:#191919"] {
+  background: #2a2a2a !important;
+}
+
+/* ── LENS GRID ── */
+.lens-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.sectionlens {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+  box-shadow: var(--shadow-l);
+}
+
+.sectionlens:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: rgba(200,169,110,0.5);
+}
+
+.sectionlens img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.sectionlens:hover img { transform: scale(1.02); }
+
+/* ── LIGHTBOX ── */
+#lightboxOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--forest-1);
+  backdrop-filter: blur(8px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+#lightboxOverlay img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0;
+  opacity: 0.5;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ── TABLE ── */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 16px;
+}
+
+th, td {
+  padding: 8px 10px;
+  font-size: 11.5px;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: var(--forest-l);
+  background: var(--mist);
+}
+
+/* ── TOGGLE TARGETS ── */
+.toggleTarget, .toggleTarget1 { display: none; }
+
+/* ── RESULT TEXT ── */
+.result, #output, #PFLResult, #dateOutput {
+  font-family: 'DM+Serif+Display', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--forest);
+  line-height: 1.8;
+  margin-top: 10px;
+  padding: 12px 16px;
+  background: var(--mist);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+}
+
+/* ── RULER ── */
+.Ruler { overflow-x: auto; }
+
+#ruler {
+  fill: var(--forest);
+  stroke: var(--forest);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  display: block;
+}
+
+/* ── CIRCLE ── */
+#circleContainer { position: relative; }
+#circleSVG circle { stroke: var(--gold) !important; }
+#circleLabel { color: var(--gold) !important; font-size: 10px; text-align: center; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: none; width: 80%; line-height: 1.5; }
+
+/* ── THICKNESS ── */
+#reContainer, #leContainer {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+/* ── HIDDEN ── */
+.hidden { display: none; }
+.search-only {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; white-space: nowrap; clip: rect(0 0 0 0);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section {
+  animation: fadeUp 0.4s ease both;
+}
+
+.section:nth-child(1) { animation-delay: 0.05s; }
+.section:nth-child(2) { animation-delay: 0.10s; }
+.section:nth-child(3) { animation-delay: 0.15s; }
+.section:nth-child(4) { animation-delay: 0.20s; }
+
+/* ── MISC ── */
+.vert { stroke: var(--gold) !important; }
+.hori { stroke: none; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .header-title { font-size: 1.9rem; }
+  .lens-container { grid-template-columns: 1fr; }
+  .rx-row { flex-direction: column; align-items: flex-start; }
+  button.normal { width: 100%; min-width: unset; }
+}
+
+.hidden {
+  display: none !important;
+}
+
+</style>
+</head>
+
+<body>
+<div style="height: 750px"></div>
+
+<div class="wrap">
+
+<div class="section">
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-brand">
+      <h1 class="header-title">Vector Refraction with<br> <em>Freeform Ultimate Germany</em></h1>
+      <br>
+<span class="header-eyebrow">
+See clearer, no headaches, no dizziness, no discomforts.</span>
+<span class="header-eyebrow">Specially incorporated with binocular balancing calculations.</span>
+<br>
+
+    </div>
+
+
+    <div class="header-ornament">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg>
+    </div>
+
+
+  </header>
+<button style="height:25px;  padding:5px 15px" class="normal" onclick="toggleHideShow('myBlock')">Toggle Whatsapp</button> 
+
+<div style="height:15px"></div>
+
+
+<div class="myBlock hidden">
+    <label>Full Name</label>
+    <input style="width:100%" id="name" type="text" placeholder="Patient name">
+
+    <label>WhatsApp — <em style="font-style:italic; font-weight:300; text-transform:none; letter-spacing:0">include country code e.g. 601170199170</em></label>
+    <input style="width:100%" id="phone" type="text" placeholder="60xxxxxxxxxx">
+
+    <label>Notes</label>
+    <textarea id="msg"></textarea>
+
+    <div class="btn-row">
+      <button class="normal" id="greetBtn">Greetings</button>
+      <button class="normal" id="sendBtn">Send WhatsApp</button>
+    </div>
+<div style="height:25px"></div>
+
+  </div>
+
+
+
+</div>
+
+  <!-- WEARER DETAILS -->
+  <div class="section">
+<h2>
+
+<button
+  style="height:25px; padding:5px 15px"
+  class="normal toggleBtn"
+  onclick="showLensSet('images', this)">
+  Show All Lenses
+</button>
+
+<button
+  style="height:25px; padding:5px 15px"
+  class="normal toggleBtn"
+  onclick="showLensSet('lenses', this)">
+  Show Suitable Lens
+</button>
+
+
+
+</h2>
+
+<script>
+function showLensSet(type, btn) {
+
+  document.getElementById("lensSet").classList.add("hidden");
+  document.getElementById("imageSet").classList.add("hidden");
+
+  document.querySelectorAll(".toggleBtn").forEach(b => {
+    b.classList.remove("active");
+  });
+
+  btn.classList.add("active");
+
+  if(type === "images"){
+    document.getElementById("imageSet").classList.remove("hidden");
+  }
+
+  if(type === "lenses"){
+    document.getElementById("lensSet").classList.remove("hidden");
+  }
+
+}
+</script>
+
+<div style="height:20px"></div>
+    <h2 class="section-title">Lens' Details 
+</h2>
+
+<script>
+function toggleHideShow(blockClass) {
+  document
+    .querySelector("." + blockClass)
+    .classList.toggle("hidden");
+}
+</script>
+
+  <!-- INDEX RECOMMENDER -->
+
+    <div class="rx-row">
+      <span class="rx-label">Prescription</span>
+      <input style="width:72px" id="sphOD" type="text" placeholder="Sph">
+
+  <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('sphOD',-1)">-</button>
+  <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('sphOD',1)">+</button>   
+
+      <span class="sep">/</span>
+<input style="width:72px" id="cylOD" type="number" max="0" step="0.25" placeholder="Cyl">
+  <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('cylOD',-1)">-</button>
+  <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('cylOD',1)">+</button> 
+
+
+<button class="normal" style="height:25px;  padding:5px 15px" type="button" id="copyToggleBtn" onclick="toggleCopyMode()">
+  Normal Thickness
+</button>
+
+    </div>
+
+
+
+    <div style="display:none" class="rx-row">
+      <span class="rx-label">Left Eye (OS)</span>
+      <input style="width:72px" id="sphOS" type="text" placeholder="Sph">
+      <span class="sep">/</span>
+      <input style="width:72px" id="cylOS" type="text" placeholder="Cyl">
+    </div>
+
+
+
+    <div class="rx-row">
+      <span class="rx-label">Add Prescription</span>
+<select id="addPower" style="width:240px; font-size:12px">
+  <option value="">No Add Power</option>
+  <option value="100">Relax +0.00 to +1.00</option>
+  <option value="150">Entry +1.00 to +1.50</option>
+  <option value="200">Normal +1.50 to +2.00</option>
+  <option value="250">Premium +2.00 to +2.50</option>
+</select>
+
+
+<button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(-1)">-</button>
+<button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(1)">+</button>
+
+
+<button style="height:25px;  padding:5px 15px" type="button" id="officeLensBtn" class="normal toggleBtnoffice" onclick="toggleOfficeLens()">Office Lens</button>
+
+
+
+<button class="normal" style="display:none; height:25px;  padding:5px 15px" onclick="togglemfonly('mfonly')">Hide SV</button>
+
+
+<script>
+function stepAdd(dir) {
+  const select = document.getElementById("addPower");
+  let i = select.selectedIndex;
+
+  i += dir;
+
+  // clamp (NO LOOP)
+  if (i < 0) i = 0;
+  if (i >= select.options.length) i = select.options.length - 1;
+
+  select.selectedIndex = i;
+  select.dispatchEvent(new Event('change'));
+}
+</script>
+
+
+
+
+</div>
+
+<div style="height:30px"></div>
+<div style="display:none">
+    <h2 class="section-title">Index Recommender &nbsp;<span class="index-result" id="indexResult"></span></h2>
+</div>
+
+    <!-- hidden sections preserved -->
+    <div class="section" style="display:none">
+      <h3>From Hypervision</h3>
+      <table>
+        <tr style="border:none; height:1px;"><td style="border:none; height:1px; padding:0;"></td><td style="border:none; height:1px; padding:0;"></td><td style="border:none; height:1px; padding:0;"></td><td style="border:none; height:1px; padding:0;"></td></tr>
+        <tr><th colspan="4">Summary for <span id="customerName_summary"></span> <span id="todayDate"></span></th></tr>
+        <tr style="border:none; height:10px;"><td colspan="4" style="border:none; height:1px; padding:0;"></td></tr>
+        <tr><th colspan="4">Far & Near Rx</th></tr>
+        <tr><td colspan="4" style="border-top: 1px dotted grey"></td></tr>
+        <tr><td class="red">Current Rx</td><td colspan="3" class="red">R: <span id="od_origCombined" style="margin-right:100px;">0.00 / 0.00 x 0</span> L: <span id="os_origCombined">0.00 / 0.00 x 0</span></td></tr>
+        <tr><td class="red">Current Near +<span id="mirrorNearAdd"></span></td><td colspan="3" class="red">R: <span id="od_nearCombined" style="margin-right:100px;">0.00 / 0.00 x 0</span> L: <span id="os_nearCombined">0.00 / 0.00 x 0</span></td></tr>
+        <tr><td colspan="4" style="border-top: 1px dotted grey"></td></tr>
+        <tr class="mask2"><td class="yellow">Vector Rx</td><td colspan="3" class="yellow">R: <span id="od_vcCombined" style="margin-right:100px;">0.00 / 0.00 x 0</span> L: <span id="os_vcCombined">0.00 / 0.00 x 0</span></td></tr>
+        <tr class="mask2"><td class="yellow">Vector Near +<span id="mirrorNearAddVector"></span></td><td colspan="3" class="yellow">R: <span id="od_vcNearCombined_mirror" style="margin-right:100px;">0.00 / 0.00 x 0</span> L: <span id="os_vcNearCombined_mirror">0.00 / 0.00 x 0</span></td></tr>
+        <tr><td colspan="4" style="border-top: 1px dotted grey"></td></tr>
+        <tr class="mask1"><td class="blue">Manual Rx</td><td colspan="3" class="blue">R: <span id="od_finalCombined" style="margin-right:100px;">OD -</span> L: <span id="os_finalCombined">OS -</span></td></tr>
+        <tr class="mirror1 mask1"><td class="blue">Vectorized RE Dom</td><td colspan="3" class="blue">R: <span id="od_vectorDisplay_mirror" style="margin-right:80px;">0.00 / 0.00 x 0</span> L: <span id="os_vectorDisplay_mirror">0.00 / 0.00 x 0</span></td></tr>
+        <tr class="mirror2 mask1"><td class="blue">Vectorized LE Dom</td><td colspan="3" class="blue">R: <span id="ODcrossedSpan_mirror" style="margin-right:80px;">0.00 / 0.00 x 0</span> L: <span id="OScrossedSpan_mirror">0.00 / 0.00 x 0</span></td></tr>
+        <tr class="mask1"><td class="blue">Manual Near +<span id="mirrorNearAddFinal"></span></td><td colspan="3" class="blue">R: <span id="od_finalNearCombined_mirror" style="margin-right:100px;">0.00 / 0.00 × 0</span> L: <span id="os_finalNearCombined_mirror">0.00 / 0.00 × 0</span></td></tr>
+        <tr><td colspan="4" style="border:none; height:10px;"></td></tr>
+        <tr class="mask4"><th colspan="4">New Fitting Details</th></tr>
+        <tr class="mask4"><td>Right</td><td colspan="3">PD: <span id="od_PD">-</span> mm ; NOC: <span id="od_NOC">-</span> mm</td></tr>
+        <tr class="mask4"><td>Left</td><td colspan="3">PD: <span id="os_PD">-</span> mm ; NOC: <span id="os_NOC">-</span> mm</td></tr>
+      </table>
+    </div>
+
+    <!-- Weekend Promo (hidden) -->
+    <div class="section" style="display:none">
+      <button class="normal" style="background-color:#191919" onclick="toggleByClass('toggleTarget1')">Weekend Promo</button>
+      <div class="toggleTarget1" style="display:none;">
+        <div class="section">
+          <h3>Next-Gen Eye Exam Experience</h3>
+          <span><b>Eliminates blur by measuring it, then calculating your best prescription without the blur. Key in your prescription below to see your discount value!</b></span><br><br>
+          <span>1. Right Eye RX : </span>
+          <input style="width:15%" type="text" id="PFLOdSphere" placeholder="Sphere"> /
+          <input style="width:15%" type="text" id="PFLOdCyl" placeholder="Cyl"><br><br>
+          <span>2. Left Eye RX : </span>
+          <input style="width:15%" type="text" id="PFLOsSphere" placeholder="Sphere"> /
+          <input style="width:15%" type="text" id="PFLOsCyl" placeholder="Cyl">
+          <script>
+          ['PFLOdSphere','PFLOdCyl','PFLOsSphere','PFLOsCyl'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('blur', () => {
+              let val = parseFloat(el.value);
+              if (!isNaN(val)) el.value = (Math.round(val * 4) / 4).toFixed(2);
+              else el.value = '';
+            });
+          });
+          </script>
+          <br><br>
+          <span>3. Chosen Lens Price (RM)</span>
+          <input style="width:35%" type="text" step="0" id="PFLLensPrice" value="" placeholder="Enter Lens Price"><br><br>
+          <button class="normal" onclick="calculatePromo()">Discount</button>
+          <button class="normal" style="background-color:maroon" id="PFLRCodeBtn" onclick="toggleRCode()">R-Code</button><br><br>
+          <b><i><div class="result" id="PFLResult">Price : Awaiting...</div></i></b><br><br>
+          <script>
+          let rCodeApplied = false;
+          function getPromoValue(sphere, cyl) {
+            const combinedPower = sphere + 0.5 * cyl;
+            return (combinedPower > 2.00 || combinedPower < -4.00) ? 380 : 250;
+          }
+          function toggleRCode() { rCodeApplied = true; calculatePromo(); }
+          function calculatePromo() {
+            const odSphere = parseFloat(document.getElementById('PFLOdSphere')?.value) || 0;
+            const odCyl = parseFloat(document.getElementById('PFLOdCyl')?.value) || 0;
+            const osSphere = parseFloat(document.getElementById('PFLOsSphere')?.value) || 0;
+            const osCyl = parseFloat(document.getElementById('PFLOsCyl')?.value) || 0;
+            const lensPrice = parseFloat(document.getElementById('PFLLensPrice')?.value) || 0;
+            const basePromoValue = Math.max(getPromoValue(odSphere, odCyl), getPromoValue(osSphere, osCyl));
+            let promoValue = basePromoValue;
+            if (rCodeApplied) promoValue += 200;
+            let topUp = Math.max(0, lensPrice - promoValue);
+            let discount = 0;
+            if (topUp >= 300 && topUp <= 500) discount = 0.10;
+            else if (topUp > 500) discount = 0.15;
+            const discountedTopUp = topUp * (1 - discount);
+            let lensInfo = rCodeApplied
+              ? (basePromoValue === 250 ? 'Free Asahi Japan 1.56 UV420 Blue Light Filter' : 'Free Asahi Japan 1.60 UV420 Blue Light Filter')
+              : (basePromoValue === 250 ? 'Free Rayfilter 1.56 UV400' : 'Free Rayfilter 1.60 UV400');
+            const el = document.getElementById('PFLResult');
+            if(el) el.innerHTML = `<span style="color:${rCodeApplied ? 'darkred' : 'inherit'}">Discount Value: RM ${promoValue} (${lensInfo})</span><br><br>Top-up Required: RM ${topUp.toFixed(2)}<br><br>${discount > 0 ? `Further Discount! ${discount*100}% → RM ${discountedTopUp.toFixed(2)}<br><br>` : ''}`;
+            rCodeApplied = false;
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing (hidden) -->
+    <div class="section" style="display:none">
+      <button class="normal" onclick="toggleByClass('toggleTarget')">Pricing</button>
+      <div class="toggleTarget" style="display:none;">
+        <div class="section">
+          <h3>Lens Price</h3>
+          <div><b>Index : Low – Median – High</b><br>
+          1.56 : RM 250 – 480 – 2,600<br>1.61 : RM 380 – 550 – 3,150<br>1.67 : RM 530 – 650 – 3,550<br>1.74 : RM 750 – 880 – 4,850</div><br>
+          <span><b>Calculator</b></span>
+          <input style="margin-bottom:1%" id="priceInput" type="number" placeholder="Price 1 e.g. Frame">
+          <input style="margin-bottom:1%" id="input2" type="number" placeholder="Price 2 e.g. Lens">
+          <input style="margin-bottom:1%" id="input3" type="number" placeholder="Price 3 e.g. Lens Extra">
+          <div class="btn-row">
+            <button class="normal" onclick="calculateStandardDiscount()">Discount</button>
+            <button style="display:none" class="normal" onclick="calculateNoExamDiscount()">No Eye Exam Price</button>
+            <button class="normal" style="background-color:maroon" id="rCodeBtn" onclick="applyRCode()">R</button>
+          </div>
+          <div id="output" style="font-weight:bold; margin-top:2%"><i>Price : Awaiting..</i></div><br>
+          <div id="dateOutput" style="font-weight:bold;"></div><br>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button style="display:none" class="normal" onclick="toggleRuler()">Toggle Ruler</button>
+      <button style="display:none" class="normal" onclick="toggleDiameter()">Diameter Check</button>
+    </div>
+
+    <!-- Diameter -->
+    <div style="border:none">
+ <div style="display:none">
+      <div>
+        <span style="font-size:15px"><b>Important! Check if lens size fit!</b></span>
+        <div style="display:none">
+          <button class="circleBtn small" onclick="setCircleSize(312, this)">60 mm stock</button>
+          <button class="circleBtn small" onclick="setCircleSize(338, this)">65 mm stock</button>
+          <button class="circleBtn small" onclick="setCircleSize(364, this)">70 mm RX</button>
+          <button class="circleBtn small" onclick="setCircleSize(390, this)">75 mm RX</button>
+        </div>
+        <button style="background-color:red" class="circleBtn small" onclick="setCircleSize(338, this)">65 mm stock</button>
+      </div>
+      <div style="margin-top:2%; padding:5%; display:flex; justify-content:center; align-items:center;">
+        <div id="circleContainer" style="position: relative; width: 312px; height: 312px; margin-top: 10px;">
+          <svg id="circleSVG" width="100%" height="100%" viewBox="0 0 300 300" style="display:block;">
+            <circle cx="150" cy="150" r="140" stroke="red" stroke-width="1" fill="none" stroke-dasharray="2 2"/>
+            <line class="vert" x1="150" y1="15" x2="150" y2="285" stroke-width="1" stroke-dasharray="1 1"/>
+            <line class="hori" x1="0" y1="150" x2="300" y2="150" stroke-width="1" />
+          </svg>
+          <span style="color:var(--gold)" id="circleLabel" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            Align PD along this line<br>then check all edges.<br>Make sure they<br>fit inside the circle.
+          </span>
+        </div>
+      </div>
+</div>
+
+ <h3>
+
+<button class="normal" style="width:327px; height:40px; border-radius:10px;" onclick="togglethickness()">Align this box to fit screen width; then press to see thickness chart</button> 
+
+<button class="normal" style="margin-left:40px; width:327px; height:40px; border-radius:10px;"  onclick="toggleShowAll()">
+  Show All <br> Index Thickness
+</button>
+
+
+</h3>
+
+
+      <script>
+      function togglethickness(){
+        document.querySelectorAll('.thickness').forEach(el=>{
+          el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        });
+      }
+      </script>
+
+
+
+
+      <div id="reContainer" class="thickness" style="margin-top:20px; display:none; position:relative; border-radius:10px; width:700px; height:250px; overflow:hidden;">
+
+        <img id="reImg" style="width:100%; height:100%; object-fit:cover; object-position:50% 0%;">
+
+  <div class="lensMask" data-i="0"></div>
+  <div class="lensMask" data-i="1"></div>
+  <div class="lensMask" data-i="2"></div>
+  <div class="lensMask" data-i="3"></div>
+
+
+        <span id="reOverlay" style="position:absolute; top:7px; left:40px; color:grey; font-size:12px;">Thickness Estimator</span>
+      </div>
+
+
+
+
+
+<div style="display:none">
+
+      <div id="leContainer" class="thickness" style="display:none; position:relative; border-radius:10px; width:700px; height:250px; overflow:hidden;">
+        <img id="leImg" style="width:100%; height:100%; object-fit:cover; object-position:50% 0%;">
+        <span id="leOverlay" style="position:absolute; top:7px; left:40px; color:grey; font-size:12px;">Left Eye Thickness</span>
+      </div>
+</div>
+    </div>
+
+    <!-- Ruler -->
+    <div class="Ruler hidden section">
+      <h2 class="section-title">Ruler</h2>
+      <button class="small" id="rotateBtn">Rotate 90°</button>
+      <div style="width:100%; height:620px; display:flex; justify-content:center">
+        <svg style="margin-top:280px" id="ruler" width="600" height="60">
+          <line x1="300" y1="0" x2="300" y2="30" style="stroke:var(--gold); stroke-width:2"/>
+          <text x="300" y="40" text-anchor="middle" fill="var(--forest)" font-family="'DM Sans'" font-size="9">0</text>
+          <script type="application/ecmascript"><![CDATA[
+          (function(){
+            const SVG_NS = "http://www.w3.org/2000/svg";
+            const svg = document.getElementById('ruler');
+            const center = 300;
+            const right55 = 300 + (527.5 - 264) * (55/50);
+            const pxPerMm = (right55 - center) / 55 * (100/100.5);
+            function makeLine(x, y2){
+              const l = document.createElementNS(SVG_NS, 'line');
+              l.setAttribute('x1', x); l.setAttribute('y1', 0);
+              l.setAttribute('x2', x); l.setAttribute('y2', y2);
+              l.setAttribute('stroke', '#0b3d2e'); l.setAttribute('stroke-width', '1');
+              svg.appendChild(l);
+            }
+            function makeLabel(x, mm, anchor){
+              const t = document.createElementNS(SVG_NS, 'text');
+              t.setAttribute('x', x); t.setAttribute('y', 40);
+              t.setAttribute('text-anchor', anchor);
+              t.setAttribute('fill', '#0b3d2e');
+              t.setAttribute('font-family', "'DM Sans'");
+              t.setAttribute('font-size', '9');
+              t.textContent = mm;
+              svg.appendChild(t);
+            }
+            const maxMM = 55;
+            for (let mm = 1; mm <= maxMM; mm++){
+              const xL = Number((center - mm * pxPerMm).toFixed(2));
+              const xR = Number((center + mm * pxPerMm).toFixed(2));
+              const yLen = (mm === maxMM) ? 30 : (mm % 10 === 0 ? 25 : (mm % 5 === 0 ? 20 : 10));
+              makeLine(xL, yLen); if(mm % 5 === 0) makeLabel(xL, mm, 'middle');
+              makeLine(xR, yLen); if(mm % 5 === 0) makeLabel(xR, mm, 'middle');
+            }
+          })();
+          ]]></script>
+        </svg>
+        <script>
+        const btn = document.getElementById('rotateBtn');
+        const rulerSvg = document.getElementById('ruler');
+        let rotated = false;
+        btn.addEventListener('click', () => {
+          rotated = !rotated;
+          rulerSvg.style.transform = rotated ? 'rotate(90deg)' : 'rotate(0deg)';
+        });
+        </script>
+      </div>
+    </div>
+
+  </div><!-- /section index recommender -->
+
+<div class="section">
+
+      <h1 class="header-title">July & August 2026 Promo  
+	<em><span style="font-size:22px">
+	<br>All Lenses 15% discount.
+	
+</em></span>
+</h1>
+
+</div>
+
+
+<div id="lensSet">
+
+  <!-- LENS CARDS -->
+  <div class="lens-container">
+
+    <div class="sectionlens mfonly" style="min-height:500px" ><div id="normalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+
+
+    <div class="sectionlens mfonly"><div id="customLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+
+<div class="sectionlens myopiashow" style="min-height:500px">
+  <div id="myopiaContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
+
+
+<div style="display:none">
+<div class="sectionlens mfshow" style="min-height:500px">
+  <div id="mfNormalContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
+</div>
+
+
+<div class="sectionlens mfshow" style="min-height:500px">
+  <div id="mfWideContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
+
+<div id="officeLensSection" style="display:none">
+  <div class="sectionlens" style="min-height:500px; border:3px #004187 solid ">
+    <div id="officeContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+  </div>
+</div>
+
+
+  </div>
+
+</div>
+
+
+<!-- IMAGE SET -->
+<div id="imageSet" class="hidden">
+
+  <div class="lens-container">
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="n000Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/n000.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="c000Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/c000.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mc000Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mc000.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="of000Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/of000.jpg" style="width:100%">
+      </div>
+    </div>
+
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf075Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add075.jpg" style="width:100%">
+      </div>
+    </div>
+
+
+<div style="display:none">
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf125Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add125.jpg" style="width:100%">
+      </div>
+    </div>
+</div>
+
+
+<div style="display:none">
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf150Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add150.jpg" style="width:100%">
+      </div>
+    </div>
+</div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf175Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add175.jpg" style="width:100%">
+      </div>
+    </div>
+
+<div style="display:none">
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf200Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add200.jpg" style="width:100%">
+      </div>
+    </div>
+</div>
+
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf225Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add225.jpg" style="width:100%">
+      </div>
+    </div>
+
+
+<div style="display:none">
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf275Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add275.jpg" style="width:100%">
+      </div>
+    </div>
+</div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf325Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add325.jpg" style="width:100%">
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+function toggleMFVisibility() {
+  const hasAdd = document.getElementById("addPower").value !== "";
+
+  document.querySelectorAll('.mfonly').forEach(el => {
+    el.style.display = hasAdd ? 'none' : 'block';
+  });
+
+  document.querySelectorAll('.mfshow').forEach(el => {
+    el.style.display = hasAdd ? 'block' : 'none';
+  });
+
+  document.querySelectorAll('.myopiashow').forEach(el => {
+    el.style.display = hasAdd ? 'none' : 'block';
+  });
+}
+</script>
+
+</div><!-- /wrap -->
+
+<div style="height:80px"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightboxOverlay" onclick="closeLightbox()">
+  <img id="lightboxImg" src="">
+</div>
+
+<!-- ============ ALL SCRIPTS (unchanged logic) ============ -->
+<script>
+function snapToQuarter(val){
+  let num = parseFloat(val);
+  if (isNaN(num)) return "";
+  num = Math.round(num * 4) / 4;
+  return (num > 0 ? "+" : "") + num.toFixed(2);
+}
+function attachSnap(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener("blur", () => { el.value = snapToQuarter(el.value); });
+}
+["sphOD","cylOD","sphOS","cylOS"].forEach(attachSnap);
+
+function calcIndex(sph, cyl, type) {
+  const SE = sph + cyl / 2;
+  let index = "N/A";
+  if (sph <= 0) {
+    if (type === "normal" && cyl <= 0 && cyl >= -2.00) {
+      if (SE >= -2.00 && SE <= 1.00) index = "1.56";
+      else if (SE >= 1.00 && SE <= 2.00) index = "1.56";
+      else if (SE >= -4.00 && SE <= 0.00) index = "1.61";
+      else if (SE >= -6.00 && SE <= 0.00) index = "1.67";
+      else if (SE >= -12.00 && SE <= 0.00) index = "1.74";
+    } else if (type === "custom" && cyl <= 0 && cyl >= -6.00) {
+      if (SE >= -2.00 && SE <= 2.00) index = "1.56";
+      else if (SE >= -4.00 && SE <= 3.00) index = "1.61";
+      else if (SE >= -6.00 && SE <= 4.00) index = "1.67";
+      else if (SE >= -12.00 && SE <= 6.00) index = "1.74";
+    }
+  } else {
+    if (type === "normal" && cyl <= 0 && cyl >= -2.00) {
+      if (sph >= -2.00 && sph <= 1.00) index = "1.56";
+      else if (SE >= 1.00 && SE <= 2.00) index = "1.56";
+      else if (SE >= -4.00 && SE <= 0.00) index = "1.61";
+      else if (sph >= -6.00 && sph <= 0.00) index = "1.67";
+      else if (sph >= -12.00 && sph <= 0.00) index = "1.74";
+    } else if (type === "custom" && cyl <= 0 && cyl >= -6.00) {
+      if (sph >= -2.00 && sph <= 2.00) index = "1.56";
+      else if (sph >= -4.00 && sph <= 3.00) index = "1.61";
+      else if (sph >= -6.00 && sph <= 4.00) index = "1.67";
+      else if (sph >= -12.00 && sph <= 6.00) index = "1.74";
+    }
+  }
+  return index;
+}
+
+let showAllLenses = false;
+let currentLensIndex = "1.56"; // default
+
+function focusLens(index){
+
+  currentLensIndex = index; // remember last selection
+
+  const map = {
+    "1.56": 0,
+    "1.61": 1,
+    "1.67": 2,
+    "1.74": 3
+  };
+
+  const active = map[index];
+
+  const config = [
+    { left: "0px",  width: "180px" },
+    { left: "180px",  width: "160px" },
+    { left: "340px",  width: "170px" },
+    { left: "510px",  width: "180px" }
+  ];
+
+  document.querySelectorAll(".lensMask").forEach(m => {
+    const i = Number(m.dataset.i);
+    const cfg = config[i];
+
+    m.style.left = cfg.left;
+    m.style.width = cfg.width;
+
+    if (showAllLenses) {
+      m.style.opacity = "0";
+      return;
+    }
+
+    if (i === active) {
+      m.style.opacity = "0";
+    } else {
+      m.style.opacity = "0.75";
+      m.style.backgroundColor = "#fff";
+    }
+  });
+}
+
+function toggleShowAll() {
+  showAllLenses = !showAllLenses;
+
+  if (showAllLenses) {
+    document.querySelectorAll(".lensMask").forEach(m => {
+      m.style.opacity = "0";
+    });
+  } else {
+    focusLens(currentLensIndex); // restore last selected lens
+  }
+}
+
+
+
+function calcMyopiaIndex(sph, cyl){
+  if (sph > 0) return "UNAVAILABLE";
+  return calcIndex(sph, cyl, "custom");
+}
+
+function showMyopiaControl(myopiaIndex){
+  const div = document.getElementById("myopiaContainer");
+  if (!div) return;
+
+  div.innerHTML = "";
+
+  if (myopiaIndex === "UNAVAILABLE"){
+    div.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
+    return;
+  }
+
+  if (myopiaIndex === "N/A"){
+    div.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
+    return;
+  }
+
+  const img = document.createElement("img");
+  img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mc${myopiaIndex.replace(".","")}.jpg`;
+  img.style.width = "100%";
+  img.onclick = () => openLightbox(img.src);
+
+  div.appendChild(img);
+}
+
+function showOfficeLens(customIndex){
+  const div = document.getElementById("officeContainer");
+  if (!div) return;
+
+  div.innerHTML = "";
+
+  if (customIndex === "N/A") return;
+
+  const img = document.createElement("img");
+  img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/of${customIndex.replace(".","")}.jpg`;
+  img.style.width = "100%";
+  img.onclick = () => openLightbox(img.src);
+
+  div.appendChild(img);
+}
+
+
+let officeLensVisible = false;
+
+function toggleOfficeLens(){
+  officeLensVisible = !officeLensVisible;
+
+  document.getElementById("officeLensSection").style.display =
+    officeLensVisible ? "block" : "none";
+
+  document.getElementById("officeLensBtn")
+    .classList.toggle("active", officeLensVisible);
+}
+
+
+function getSVImage(type, index){
+  if (!index || index === "N/A") return null;
+  const prefix = type === "normal" ? "n" : "c";
+  return `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/${prefix}${index.replace(".","")}.jpg`;
+}
+
+function getMFImage(index){
+  if (!index || index === "N/A") return null;
+  const add = document.getElementById("addPower").value;
+  if (!add) return null;
+  return `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf${index.replace(".","")}_add${add}.jpg`;
+}
+
+function getAFImage(index, add){
+  if (!index || index === "N/A") return null;
+  return `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/af${index.replace(".","")}_add${add}.jpg`;
+}
+
+function showSVImages(normalIndex, customIndex){
+  const normalContainer = document.getElementById("normalLensContainer");
+  const customContainer = document.getElementById("customLensContainer");
+  normalContainer.innerHTML = "";
+  customContainer.innerHTML = "";
+  if (normalIndex === "N/A") {
+    normalContainer.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
+  } else {
+    const img = document.createElement("img");
+    img.src = getSVImage("normal", normalIndex);
+    img.style.width = "100%";
+    img.onclick = () => openLightbox(img.src);
+    normalContainer.appendChild(img);
+  }
+  if (customIndex === "N/A") {
+    customContainer.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Custom RX required</span>';
+  } else {
+    const img = document.createElement("img");
+    img.src = getSVImage("custom", customIndex);
+    img.style.width = "100%";
+    img.onclick = () => openLightbox(img.src);
+    customContainer.appendChild(img);
+  }
+}
+
+let copyMode = false;
+
+function toggleCopyMode() {
+  copyMode = !copyMode;
+
+  const btn = document.getElementById("copyToggleBtn");
+  btn.innerText = copyMode ? "Thinner than Normal" : "Normal Thickness";
+
+  btn.classList.toggle("active", copyMode);
+
+  if (copyMode) {
+    syncODtoOS();
+  } else {
+    document.getElementById("sphOS").value = "0.00";
+    document.getElementById("cylOS").value = "0.00";
+  }
+
+  updateRecommendation();
+}
+
+
+
+function syncODtoOS() {
+  const sphOD = parseFloat(document.getElementById("sphOD").value);
+  const cylOD = document.getElementById("cylOD").value;
+
+  if (isNaN(sphOD)) return;
+
+  const sign = sphOD < 0 ? -1 : 1;
+  const sphOS = sign * (Math.abs(sphOD) + 2);
+
+  let formatted = sphOS.toFixed(2);
+  if (sphOS > 0) formatted = "+" + formatted;
+
+  document.getElementById("sphOS").value = formatted;
+  document.getElementById("cylOS").value = cylOD;
+
+  updateRecommendation();
+}
+
+
+
+
+function showMFPair(customIndex){
+  const normalDiv = document.getElementById("mfNormalContainer");
+  const wideDiv   = document.getElementById("mfWideContainer");
+
+  normalDiv.innerHTML = "";
+  wideDiv.innerHTML = "";
+
+  const add = document.getElementById("addPower").value;
+  if (!add || customIndex === "N/A") return;
+
+  // 🔥 map to pair
+const map = {
+  "100": ["125","075"],
+  "150": ["150","175"],
+  "200": ["200","225"],
+  "250": [275,"325"]
+};
+
+  const pair = map[add];
+  if (!pair) return;
+
+  const [normalAdd, wideAdd] = pair;
+
+  // NORMAL
+  if (normalAdd){
+    const img = document.createElement("img");
+    img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf${customIndex.replace(".","")}_add${normalAdd}.jpg`;
+    img.style.width = "100%";
+    img.onclick = () => openLightbox(img.src);
+    normalDiv.appendChild(img);
+  } else {
+    normalDiv.innerHTML = '<span style="padding:14px; display:block">Not available</span>';
+  }
+
+  // WIDE
+  if (wideAdd){
+    const img = document.createElement("img");
+    img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf${customIndex.replace(".","")}_add${wideAdd}.jpg`;
+    img.style.width = "100%";
+    img.onclick = () => openLightbox(img.src);
+    wideDiv.appendChild(img);
+  } else {
+    wideDiv.innerHTML = '<span style="padding:14px; display:block">Not available</span>';
+  }
+}
+
+
+function updateRecommendation() {
+  const sphOD = parseFloat(document.getElementById("sphOD").value) || 0;
+  const cylOD = parseFloat(document.getElementById("cylOD").value) || 0;
+  const sphOS = parseFloat(document.getElementById("sphOS").value) || 0;
+  const cylOS = parseFloat(document.getElementById("cylOS").value) || 0;
+
+  const normalOD = calcIndex(sphOD, cylOD, "normal");
+  const normalOS = calcIndex(sphOS, cylOS, "normal");
+  const customOD = calcIndex(sphOD, cylOD, "custom");
+  const customOS = calcIndex(sphOS, cylOS, "custom");
+
+  const normalIndex = (normalOD === "N/A" || normalOS === "N/A") ? "N/A" :
+    ["1.56","1.61","1.67","1.74"].slice().reverse().find(i => i === normalOD || i === normalOS);
+
+  const customIndex = (customOD === "N/A" || customOS === "N/A") ? "N/A" :
+    ["1.56","1.61","1.67","1.74"].slice().reverse().find(i => i === customOD || i === customOS);
+
+const mcOD = calcMyopiaIndex(sphOD, cylOD);
+const mcOS = calcMyopiaIndex(sphOS, cylOS);
+
+const myopiaIndex =
+  (mcOD === "UNAVAILABLE" || mcOS === "UNAVAILABLE")
+    ? "UNAVAILABLE"
+    : ["1.56","1.61","1.67","1.74"]
+        .slice()
+        .reverse()
+        .find(i => i === mcOD || i === mcOS);
+  document.getElementById("indexResult").innerHTML = customIndex || "—";
+focusLens(customIndex); 
+
+  showSVImages(normalIndex, customIndex);
+
+  // ✅ ONLY THIS
+showMFPair(customIndex);
+toggleMFVisibility();
+showMyopiaControl(myopiaIndex);
+showOfficeLens(customIndex);
+}
+
+["sphOD","cylOD"].forEach(id =>
+  document.getElementById(id).addEventListener("input", () => {
+    updateRecommendation();
+    if (copyMode) syncODtoOS();
+  })
+);
+
+["sphOD","cylOD","sphOS","cylOS"].forEach(id =>
+  document.getElementById(id).addEventListener("input", updateRecommendation)
+);
+document.getElementById("addPower").addEventListener("change", updateRecommendation);
+document.getElementById("addPower").addEventListener("change", toggleMFVisibility);
+
+
+
+
+
+function preloadImages(urls){ urls.forEach(src => { const img = new Image(); img.src = src; }); }
+function buildAllImageURLs(){
+  const base = "https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/";
+  const indexes = ["156","161","167","174"];
+  const adds = ["075","125","150","175","200","225","275","325"];
+  const afAdds = ["075","125"];
+  const urls = [];
+  ["n","c"].forEach(prefix => { indexes.forEach(idx => { urls.push(`${base}${prefix}${idx}.jpg`); }); });
+  indexes.forEach(idx => { adds.forEach(add => { urls.push(`${base}mf${idx}_add${add}.jpg`); }); });
+  indexes.forEach(idx => { afAdds.forEach(add => { urls.push(`${base}af${idx}_add${add}.jpg`); }); });
+indexes.forEach(idx => {
+  urls.push(`${base}mc${idx}.jpg`);
+  urls.push(`${base}of${idx}.jpg`);
+});
+
+  return urls;
+
+}
+
+function preloadImagesAsync(urls){
+  return Promise.all(
+    urls.map(src => new Promise(resolve => {
+      const img = new Image();
+      img.onload = img.onerror = resolve;
+      img.src = src;
+    }))
+  );
+}
+
+window.addEventListener("load", async () => {
+  const urls = buildAllImageURLs();
+
+  await preloadImagesAsync(urls);   // wait for images
+
+  updateRecommendation();           // render once (no jump)
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+const allFiles = ['500','300','100','000','-200','-400','-600','-800','-1000','-1200'];
+const preloadedImages = {};
+function preloadThicknessImages(){
+  allFiles.forEach(file=>{
+    const img = new Image();
+    img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/thickness-photo/${file}.jpg`;
+    preloadedImages[file] = img;
+  });
+}
+const seTable = {
+  '500':   { top: [4.75,5.0,5.25,5.5], bottom: [5.75,6.0,6.25,6.5] },
+  '300':   { top: [2.75,3.0,3.25,3.5], bottom: [3.75,4.0,4.25,4.5] },
+  '100':   { top: [0.75,1.0,1.25,1.5], bottom: [1.75,2.0,2.25,2.5] },
+  '000':   { top: [-0.25,0.0,0.25,0.5], bottom: [-0.75,-1.0,-1.25,-1.5] },
+  '-200':  { top: [-1.75,-2.0,-2.25,-2.5], bottom: [-2.75,-3.0,-3.25,-3.5] },
+  '-400':  { top: [-3.75,-4.0,-4.25,-4.5], bottom: [-4.75,-5.0,-5.25,-5.5] },
+  '-600':  { top: [-5.75,-6.0,-6.25,-6.5], bottom: [-6.75,-7.0,-7.25,-7.5] },
+  '-800':  { top: [-7.75,-8.0,-8.25,-8.5], bottom: [-8.75,-9.0,-9.25,-9.5] },
+  '-1000': { top: [-9.75,-10.0,-10.25,-10.5], bottom: [-10.75,-11.0,-11.25,-11.5] },
+  '-1200': { top: [-11.75,-12.0,-12.25,-12.5], bottom: [-12.75,-13.0,-13.25,-13.5] }
+};
+function getFileHalf(se){
+  let closestFile = null, closestHalf = 'top', minDiff = Infinity;
+  for(const file in seTable){
+    ['top','bottom'].forEach(half=>{
+      seTable[file][half].forEach(val=>{
+        let diff = Math.abs(se - val);
+        if(diff < minDiff){ minDiff = diff; closestFile = file; closestHalf = half; }
+      });
+    });
+  }
+  return { file: closestFile, half: closestHalf };
+}
+function updateLens(eye){
+  let sph = parseFloat(document.getElementById(eye==='RE'?'sphOD':'sphOS')?.value) || 0;
+  let cyl = parseFloat(document.getElementById(eye==='RE'?'cylOD':'cylOS')?.value) || 0;
+  let se = sph + cyl/2;
+  let { file, half } = getFileHalf(se);
+  if(!file) return;
+  let imgElement = document.getElementById(eye==='RE'?'reImg':'leImg');
+  if(imgElement){
+    imgElement.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/thickness-photo/${file}.jpg`;
+    imgElement.style.objectPosition = `50% ${half==='top'?0:94.5}%`;
+  }
+}
+['sphOD','cylOD','sphOS','cylOS'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('input',()=>{ updateLens('RE'); updateLens('LE'); });
+});
+window.addEventListener('DOMContentLoaded',()=>{
+  preloadThicknessImages();
+  updateLens('RE');
+  updateLens('LE');
+});
+</script>
+
+<script>
+function openLightbox(src) {
+  const overlay = document.getElementById('lightboxOverlay');
+  const img = document.getElementById('lightboxImg');
+  img.src = src;
+  overlay.style.display = 'flex';
+}
+function closeLightbox() {
+  document.getElementById('lightboxOverlay').style.display = 'none';
+}
+</script>
+
+<script>
+const PUBLIC_HOLIDAYS = new Set([
+  "2025-01-01","2025-01-29","2025-01-30","2025-02-01","2025-02-03","2025-02-11",
+  "2025-03-18","2025-03-31","2025-04-01","2025-05-01","2025-05-12","2025-06-02",
+  "2025-06-07","2025-06-27","2025-08-31","2025-09-01","2025-09-05","2025-09-15",
+  "2025-09-16","2025-10-20","2025-12-11","2025-12-25","2026-01-01","2026-02-01",
+  "2026-02-02","2026-02-17","2026-02-18","2026-03-07","2026-03-21","2026-03-22",
+  "2026-03-23","2026-05-01","2026-05-27","2026-05-31","2026-06-01","2026-06-17",
+  "2026-08-25","2026-08-31","2026-09-16","2026-11-08","2026-11-09","2026-12-11","2026-12-25"
+]);
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+function getOrdinal(n) { let s=["th","st","nd","rd"], v=n%100; return n+(s[(v-20)%10]||s[v]||s[0]); }
+function addWorkingDays(date, days) {
+  let result = new Date(date);
+  while (days > 0) {
+    result.setDate(result.getDate() + 1);
+    let day = result.getDay();
+    let dateStr = result.toISOString().split('T')[0];
+    if (day !== 0 && day !== 6 && !PUBLIC_HOLIDAYS.has(dateStr)) days--;
+  }
+  return result;
+}
+function formatDateWithDay(d) {
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  return `${getOrdinal(d.getDate())} ${months[d.getMonth()]} ${DAYS[d.getDay()]}`;
+}
+function calculateWorkingDays() {
+  let today = new Date();
+  let threeDays = addWorkingDays(today, 3);
+  let sevenDays = addWorkingDays(today, 7);
+  const el = document.getElementById('dateOutput');
+  if(el) el.innerHTML = `Today is ${formatDateWithDay(today)}.<br>3 Days Completion Estimate: ${formatDateWithDay(threeDays)}.<br>7 Days Completion Estimate: ${formatDateWithDay(sevenDays)}.`;
+}
+calculateWorkingDays();
+</script>
+
+<script>
+document.getElementById("greetBtn").onclick = () => {
+  const name = document.getElementById("name").value.trim();
+  document.getElementById("msg").value = `Greetings ${name} from Kiara Optometry.`;
+};
+document.getElementById("sendBtn").onclick = () => {
+  const phone = document.getElementById("phone").value.replace(/\D/g,'');
+  const text = encodeURIComponent(document.getElementById("msg").value);
+  if (!phone || !text) return;
+  window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+};
+</script>
+
+<script>
+function formatRM(amount) { return 'RM ' + Math.round(amount).toLocaleString(); }
+function calculateStandardDiscount() {
+  let p1 = parseFloat(document.getElementById('priceInput')?.value) || 0;
+  let p2 = parseFloat(document.getElementById('input2')?.value) || 0;
+  let p3 = parseFloat(document.getElementById('input3')?.value) || 0;
+  let price = p1 + p2 + p3;
+  if (price <= 0) { document.getElementById('output').innerHTML = '<em>Please enter price.</em>'; return; }
+  let discount = 0;
+  if (price <= 249) discount = 0;
+  else if (price <= 299) discount = 10;
+  else if (price <= 699) discount = 15;
+  else discount = 20;
+  let netPrice = price * (1 - discount / 100);
+  document.getElementById('output').innerHTML = `Original Price : ${formatRM(price)}<br>Net Price : ${formatRM(netPrice)}<br>${discount > 0 ? `Description : ${discount}% off until March 2026!<br>` : ``}`;
+}
+function calculateNoExamDiscount() {
+  let p1 = parseFloat(document.getElementById('priceInput')?.value) || 0;
+  let p2 = parseFloat(document.getElementById('input2')?.value) || 0;
+  let p3 = parseFloat(document.getElementById('input3')?.value) || 0;
+  let price = p1 + p2 + p3;
+  if (price <= 0) { document.getElementById('output').innerHTML = '<br><em>Please enter price.</em>'; return; }
+  let netPrice = Math.max(price * 0.70, 200);
+  document.getElementById('output').innerHTML = `<br>Original Price : ${formatRM(price)}<br>No-Eye-Exam Net Price : ${formatRM(netPrice)}<br>`;
+}
+function applyRCode() {
+  let p1 = parseFloat(document.getElementById('priceInput')?.value) || 0;
+  let p2 = parseFloat(document.getElementById('input2')?.value) || 0;
+  let p3 = parseFloat(document.getElementById('input3')?.value) || 0;
+  let price = p1 + p2 + p3;
+  if (price <= 0) { document.getElementById('output').innerHTML = '<em>Please enter price.</em>'; return; }
+  let discount = 0;
+  if (price <= 249) discount = 0;
+  else if (price <= 299) discount = 10;
+  else if (price <= 699) discount = 15;
+  else discount = 20;
+  discount += 5;
+  let netPrice = price * (1 - discount / 100);
+  document.getElementById('output').innerHTML = `Original Price : ${formatRM(price)}<br>Net Price : ${formatRM(netPrice)}<br>${discount > 0 ? `Description : ${discount}% off (<span style="color:var(--gold); font-weight:bold;">R-Code Applied</span>)<br>` : ``}`;
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const data = JSON.parse(localStorage.getItem('summaryData') || '{}');
+  Object.keys(data).forEach(id => {
+    const span = document.getElementById(id);
+    if (span) span.textContent = data[id];
+  });
+});
+</script>
+
+<script>
+function toggleRuler() { document.querySelectorAll('.Ruler').forEach(el => el.classList.toggle('hidden')); }
+function toggleDiameter() { document.querySelectorAll('.Diameter').forEach(el => el.classList.toggle('hidden')); }
+function toggleByClass(className) {
+  document.querySelectorAll('.' + className).forEach(el => {
+    el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+  });
+}
+</script>
+
+<script>
+let selectedButton = null;
+function setCircleSize(size, btn) {
+  if (!btn.classList.contains('circleBtn')) return;
+  const padding = 20;
+  const innerSize = size - padding * 2;
+  const container = document.getElementById('circleContainer');
+  const svg = document.getElementById('circleSVG');
+  container.style.width = size + 'px';
+  container.style.height = size + 'px';
+  svg.setAttribute('viewBox', `0 0 ${innerSize} ${innerSize}`);
+  const circle = svg.querySelector('circle');
+  const lines = svg.querySelectorAll('line');
+  const center = innerSize / 2;
+  const label = document.getElementById('circleLabel');
+  label.style.position = 'absolute';
+  label.style.left = center + 'px';
+  label.style.top = center + 'px';
+  label.style.transform = 'translate(-95%, -45%)';
+  circle.setAttribute('cx', center);
+  circle.setAttribute('cy', center);
+  circle.setAttribute('r', center);
+  lines[0].setAttribute('x1', center); lines[0].setAttribute('y1', 0);
+  lines[0].setAttribute('x2', center); lines[0].setAttribute('y2', innerSize);
+  lines[1].setAttribute('x1', 0); lines[1].setAttribute('y1', center);
+  lines[1].setAttribute('x2', innerSize); lines[1].setAttribute('y2', center);
+  if (selectedButton) selectedButton.style.backgroundColor = '';
+  btn.style.backgroundColor = 'var(--gold)';
+  selectedButton = btn;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const firstButton = document.querySelector('.circleBtn');
+  if (firstButton) setCircleSize(338, firstButton);
+});
+
+window.addEventListener("load", () => {
+  document.querySelectorAll('#imageSet img').forEach(img => {
+    img.onclick = () => openLightbox(img.src);
+  });
+});
+</script>
+
+<script>
+function stepSph(id, step){
+  const el = document.getElementById(id);
+  let val = parseFloat(el.value);
+
+  if (isNaN(val)) val = 0;
+
+  val += step;
+  val = Math.round(val * 4) / 4;
+
+  el.value = (val > 0 ? "+" : "") + val.toFixed(2);
+
+  // 🔥 trigger everything that might be listening
+  el.dispatchEvent(new Event('input', { bubbles: true }));
+  el.dispatchEvent(new Event('change', { bubbles: true }));
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
