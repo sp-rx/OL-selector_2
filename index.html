@@ -721,10 +721,10 @@ function toggleHideShow(blockClass) {
       <span class="rx-label">Add Prescription</span>
 <select id="addPower" style="width:240px; font-size:12px">
   <option value="">No Add Power</option>
-  <option value="100">Relax +0.00 to +1.00</option>
-  <option value="150">Entry +1.00 to +1.50</option>
-  <option value="200">Normal +1.50 to +2.00</option>
-  <option value="250">Premium +2.00 to +2.50</option>
+  <option value="100">Entry +0.25 to +1.25</option>
+  <option value="150">Normal +1.00 to +1.75</option>
+  <option value="200">Premium +2.00 to +2.50</option>
+<!-- <option value="250">Premium +2.00 to +2.50</option> -->
 </select>
 
 
@@ -1041,7 +1041,7 @@ function stepAdd(dir) {
 </div>
 
 
-<div style="display:none">
+<div style="">
 <div class="sectionlens mfshow" style="min-height:500px">
   <div id="mfNormalContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
 </div>
@@ -1451,10 +1451,10 @@ function showMFPair(customIndex){
 
   // 🔥 map to pair
 const map = {
-  "100": ["125","075"],
-  "150": ["150","175"],
-  "200": ["200","225"],
-  "250": [275,"325"]
+  "100": ["075","175"],
+  "150": ["200","225"],
+  "200": ["275","325"],
+  "250": ["275","325"]
 };
 
   const pair = map[add];
