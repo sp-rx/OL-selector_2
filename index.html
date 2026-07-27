@@ -1040,6 +1040,9 @@ function stepAdd(dir) {
   <div id="myopiaContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
 </div>
 
+<div class="sectionlens myopiashow" style="min-height:500px">
+  <div id="myopiaContainer2" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
 
 <div style="">
 <div class="sectionlens mfshow" style="min-height:500px">
@@ -1084,6 +1087,12 @@ function stepAdd(dir) {
     <div class="sectionlens" style="min-height:500px">
       <div id="mc000Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
         <img src="https://sp-rx.github.io/OL-selector/Lens_Catalogue/mc000.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mc2000Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://sp-rx.github.io/OL-selector/Lens_Catalogue/mc2000.jpg" style="width:100%">
       </div>
     </div>
 
@@ -1299,30 +1308,47 @@ function calcMyopiaIndex(sph, cyl){
   return calcIndex(sph, cyl, "custom");
 }
 
-function showMyopiaControl(myopiaIndex){
-  const div = document.getElementById("myopiaContainer");
-  if (!div) return;
+function showMyopiaControl(myopiaIndex) {
+  const div1 = document.getElementById("myopiaContainer");
+  const div2 = document.getElementById("myopiaContainer2");
 
-  div.innerHTML = "";
+  if (!div1 || !div2) return;
 
-  if (myopiaIndex === "UNAVAILABLE"){
-    div.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
+  div1.innerHTML = "";
+  div2.innerHTML = "";
+
+  if (myopiaIndex === "UNAVAILABLE" || myopiaIndex === "N/A") {
+    const message = `
+      <span style="
+        font-family:'DM Serif Display',serif;
+        font-style:italic;
+        color:var(--forest);
+        padding:14px;
+        display:block">
+        RX out of range
+      </span>`;
+
+    div1.innerHTML = message;
+    div2.innerHTML = message;
     return;
   }
 
-  if (myopiaIndex === "N/A"){
-    div.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
-    return;
-  }
+  const index = myopiaIndex.replace(".", "");
 
-  const img = document.createElement("img");
-  img.src = `https://sp-rx.github.io/OL-selector/Lens_Catalogue/mc${myopiaIndex.replace(".","")}.jpg`;
-  img.style.width = "100%";
-  img.onclick = () => openLightbox(img.src);
+  // MC
+  const img1 = document.createElement("img");
+  img1.src = `https://sp-rx.github.io/OL-selector/Lens_Catalogue/mc${index}.jpg`;
+  img1.style.width = "100%";
+  img1.onclick = () => openLightbox(img1.src);
+  div1.appendChild(img1);
 
-  div.appendChild(img);
+  // MC2
+  const img2 = document.createElement("img");
+  img2.src = `https://sp-rx.github.io/OL-selector/Lens_Catalogue/mc2${index}.jpg`;
+  img2.style.width = "100%";
+  img2.onclick = () => openLightbox(img2.src);
+  div2.appendChild(img2);
 }
-
 function showOfficeLens(customIndex){
   const div = document.getElementById("officeContainer");
   if (!div) return;
