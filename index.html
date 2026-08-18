@@ -264,7 +264,7 @@ textarea { min-height: 48px; resize: vertical; }
 .rx-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
   margin: 10px 0;
   flex-wrap: wrap;
 }
@@ -272,18 +272,12 @@ textarea { min-height: 48px; resize: vertical; }
 .rx-row label {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  white-space: nowrap;
-  margin: 0 12px 0 0;
+  gap: 3px;
+  margin-right: 5px;
 }
 
 .rx-row label input[type="checkbox"] {
-  margin: 0;
-  flex-shrink: 0;
-}
-
-.rx-row label span {
-  margin: 0 !important;
+  margin: -30px;
 }
 
 .rx-row .rx-label {
@@ -582,7 +576,6 @@ th {
 @media (max-width: 600px) {
   .header-title { font-size: 1.9rem; }
   .lens-container { grid-template-columns: 1fr; }
-  .rx-row { flex-direction: column; align-items: flex-start; }
   button.normal { width: 100%; min-width: unset; }
 }
 
