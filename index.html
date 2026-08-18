@@ -597,10 +597,13 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
     <div class="header-ornament">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg>
+
     </div>
 
 
   </header>
+
+
 <button style="height:25px;  padding:5px 15px" class="normal" onclick="toggleHideShow('myBlock')">Toggle Whatsapp</button> 
 
 <div style="height:15px"></div>
@@ -635,7 +638,14 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
   <div class="section">
 
-    <h2 class="section-title">Search Lens Details </h2>
+<button style="height:25px;  padding:5px 15px" class="normal" onclick="toggleHideShow('SearchLens')">Toggle Search Lens</button> 
+
+
+<div class="SearchLens hidden">
+<div style="height:15px"></div>
+
+
+    <h2 class="section-title">Search Lens</h2>
 
 <div id="lensFilters">
 
@@ -667,6 +677,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
   <span style="margin-left:-25px">Rimless</span>
 </label>
 </div>
+    <span class="section-title" style="margin-bottom:-5px"> </span>
 
 
 <!-- Rx Type -->
@@ -684,6 +695,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
   </label>
 </div>
 
+    <span class="section-title" style="margin-bottom:-5px"> </span>
 
 <!-- Lens Design -->
 <div class="rx-row">
@@ -695,15 +707,34 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
   </label>
 
   <label>
-    <input type="checkbox" name="lensDesign" value="MF">
-    <span style="margin-left:-25px">Progressive</span>
-  </label>
-
-  <label>
     <input type="checkbox" name="lensDesign" value="MYO">
     <span style="margin-left:-25px">Myopia Control</span>
   </label>
+
+
+  <label>
+    <input type="checkbox" name="lensDesign" value="DR">
+    <span style="margin-left:-25px">Digital Relieve</span>
+  </label>
+
+
 </div>
+<div class="rx-row">
+  <div class="rx-label"> </div>
+
+  <label>
+    <input type="checkbox" name="lensDesign" value="MF">
+    <span style="margin-left:-25px">Far + Mid + Near Progressive</span>
+  </label>
+
+  <label>
+    <input type="checkbox" name="lensDesign" value="OP">
+    <span style="margin-left:-25px">Mid + Near Progressive</span>
+  </label>
+</div>
+
+
+    <span class="section-title" style="margin-bottom:-5px"> </span>
 
 <!-- Clear / Photo / Tint -->
 <div class="rx-row">
@@ -731,6 +762,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
 </div>
 
+    <span class="section-title" style="margin-bottom:-5px"> </span>
 
 <!-- UV / Blue Light -->
 <div class="rx-row">
@@ -747,6 +779,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
   </label>
 </div>
 
+    <span class="section-title" style="margin-bottom:-5px"> </span>
 
 <!-- Index -->
 <div class="rx-row">
@@ -799,6 +832,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 </div>
 
 
+    <span class="section-title" style="margin-bottom:-5px"> </span>
 
 
 
@@ -808,6 +842,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
   align-items:center;
   gap:10px;
   margin-bottom:10px;
+  margin-top:30px;
 ">
 
 
@@ -823,7 +858,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
 </div>
 
-
+</div>
 
 <script>
 function toggleLensResults() {
@@ -1147,7 +1182,6 @@ function frameSupports(product, rxType, frameType) {
   const frame =
     normalize(frameType);
 
-
   let column = "";
 
 
@@ -1158,7 +1192,6 @@ function frameSupports(product, rxType, frameType) {
 
   }
 
-
   else if (rxType === "Minus") {
 
     column =
@@ -1167,10 +1200,24 @@ function frameSupports(product, rxType, frameType) {
   }
 
 
-  return splitValues(column)
-    .some(value =>
-      normalize(value) === frame
+  return splitValues(column).some(value => {
+
+    const normalizedValue =
+      normalize(value);
+
+    /*
+      Handles:
+      Full
+      Full Only
+      Full, Half, Rimless
+    */
+
+    return (
+      normalizedValue === frame ||
+      normalizedValue.startsWith(frame + " ")
     );
+
+  });
 
 }
 
@@ -1762,6 +1809,42 @@ function displayLensResults(results) {
     return;
   }
 
+function getFrameSuitability(product) {
+
+  const rxTypes =
+    getProductRxTypes(product);
+
+  const values = [];
+
+  if (rxTypes.includes("Plus")) {
+
+    const plus =
+      String(
+        product.Frame_Type_Plus || ""
+      ).trim();
+
+    if (plus && plus !== "-") {
+      values.push(plus);
+    }
+
+  }
+
+  if (rxTypes.includes("Minus")) {
+
+    const minus =
+      String(
+        product.Frame_Type_Minus || ""
+      ).trim();
+
+    if (minus && minus !== "-") {
+      values.push(minus);
+    }
+
+  }
+
+  return [...new Set(values)].join(", ") || "-";
+
+}
 
   /* =========================
      RESULTS
@@ -1803,6 +1886,12 @@ function displayLensResults(results) {
 
 
               <div>
+<div>
+  <strong>Frame Suitability:</strong>
+  ${escapeHTML(
+    getFrameSuitability(product)
+  )}
+</div>
 
                 <strong>
                   ${escapeHTML(product.Index)}
