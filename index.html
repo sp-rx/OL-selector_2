@@ -269,6 +269,17 @@ textarea { min-height: 48px; resize: vertical; }
   flex-wrap: wrap;
 }
 
+.rx-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-right: 20px;
+}
+
+.rx-row label input[type="checkbox"] {
+  margin: -20px;
+}
+
 .rx-row .rx-label {
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -659,25 +670,26 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 </div>
 
   <!-- Frame Type -->
-  <div class="rx-row">
-    <div class="rx-label">Frame Type</div>
+<div class="rx-row">
+  <div class="rx-label">Frame Type</div>
 
-<label>
-  <input type="checkbox" name="frameType" value="Full">
-  <span style="margin-left:-25px">Full</span>
-</label>
+  <label>
+    <input type="checkbox" name="frameType" value="Full">
+    <span>Full</span>
+  </label>
 
-<label>
-  <input type="checkbox" name="frameType" value="Half">
-  <span style="margin-left:-25px">Half</span>
-</label>
+  <label>
+    <input type="checkbox" name="frameType" value="Half">
+    <span>Half</span>
+  </label>
 
-<label>
-  <input type="checkbox" name="frameType" value="Rimless">
-  <span style="margin-left:-25px">Rimless</span>
-</label>
+  <label>
+    <input type="checkbox" name="frameType" value="Rimless">
+    <span>Rimless</span>
+  </label>
 </div>
-    <span class="section-title" style="margin-bottom:-5px"> </span>
+
+<span class="section-title" style="margin-bottom:-5px"> </span>
 
 
 <!-- Rx Type -->
@@ -686,16 +698,17 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
   <label>
     <input type="checkbox" name="rxType" value="Plus">
-    <span style="margin-left:-25px">Plus RX</span>
+    <span>Plus RX</span>
   </label>
 
   <label>
     <input type="checkbox" name="rxType" value="Minus">
-    <span style="margin-left:-25px">Minus / Plano RX</span>
+    <span>Minus / Plano RX</span>
   </label>
 </div>
 
-    <span class="section-title" style="margin-bottom:-5px"> </span>
+<span class="section-title" style="margin-bottom:-5px"> </span>
+
 
 <!-- Lens Design -->
 <div class="rx-row">
@@ -703,38 +716,36 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
   <label>
     <input type="checkbox" name="lensDesign" value="SV">
-    <span style="margin-left:-25px">Single Vision</span>
+    <span>Single Vision</span>
   </label>
 
   <label>
     <input type="checkbox" name="lensDesign" value="MYO">
-    <span style="margin-left:-25px">Myopia Control</span>
+    <span>Myopia Control</span>
   </label>
-
 
   <label>
     <input type="checkbox" name="lensDesign" value="DR">
-    <span style="margin-left:-25px">Digital Relieve</span>
+    <span>Digital Relieve</span>
   </label>
-
-
 </div>
+
 <div class="rx-row">
   <div class="rx-label"> </div>
 
   <label>
     <input type="checkbox" name="lensDesign" value="MF">
-    <span style="margin-left:-25px">Far + Mid + Near Progressive</span>
+    <span>Far + Mid + Near Progressive</span>
   </label>
 
   <label>
     <input type="checkbox" name="lensDesign" value="OP">
-    <span style="margin-left:-25px">Mid + Near Progressive</span>
+    <span>Mid + Near Progressive</span>
   </label>
 </div>
 
+<span class="section-title" style="margin-bottom:-5px"> </span>
 
-    <span class="section-title" style="margin-bottom:-5px"> </span>
 
 <!-- Clear / Photo / Tint -->
 <div class="rx-row">
@@ -742,27 +753,27 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
   <label>
     <input type="checkbox" name="lensType" value="Clear">
-    <span style="margin-left:-25px">Clear</span>
+    <span>Clear</span>
   </label>
 
   <label>
     <input type="checkbox" name="lensType" value="Photo">
-    <span style="margin-left:-25px">Photo</span>
+    <span>Photo</span>
   </label>
 
   <label>
     <input type="checkbox" name="lensType" value="Tint">
-    <span style="margin-left:-25px">Tint</span>
+    <span>Tint</span>
   </label>
 
-<label>
-  <input type="checkbox" name="lensType" value="Pol">
-  <span style="margin-left:-25px">Pol</span>
-</label>
-
+  <label>
+    <input type="checkbox" name="lensType" value="Pol">
+    <span>Pol</span>
+  </label>
 </div>
 
-    <span class="section-title" style="margin-bottom:-5px"> </span>
+<span class="section-title" style="margin-bottom:-5px"> </span>
+
 
 <!-- UV / Blue Light -->
 <div class="rx-row">
@@ -770,65 +781,54 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
   <label>
     <input type="checkbox" name="protection" value="UV400">
-    <span style="margin-left:-25px">UV 400 Only</span>
+    <span>UV 400 Only</span>
   </label>
 
   <label>
     <input type="checkbox" name="protection" value="BLF">
-    <span style="margin-left:-25px">Blue Light Filter</span>
+    <span>Blue Light Filter</span>
   </label>
 </div>
 
-    <span class="section-title" style="margin-bottom:-5px"> </span>
+<span class="section-title" style="margin-bottom:-5px"> </span>
+
 
 <!-- Index -->
 <div class="rx-row">
   <div class="rx-label">Index</div>
-<label>
-  <input type="checkbox" name="index" value="1.5">
-  <span style="margin-left:-25px">
-    1.50 (−2.00 to +1.00)
-  </span>
-</label>
 
-<label>
-  <input type="checkbox" name="index" value="1.6">
-  <span style="margin-left:-25px">
-    1.60 (−4.00 to +2.00)
-  </span>
-</label>
+  <label>
+    <input type="checkbox" name="index" value="1.5">
+    <span>1.50 (−2.00 to +1.00)</span>
+  </label>
 
+  <label>
+    <input type="checkbox" name="index" value="1.6">
+    <span>1.60 (−4.00 to +2.00)</span>
+  </label>
 </div>
+
 <div class="rx-row">
   <div class="rx-label"> </div>
 
-<label>
-  <input type="checkbox" name="index" value="1.67">
-  <span style="margin-left:-25px">
-    1.67 (−6.00 to +4.00)
-  </span>
-</label>
+  <label>
+    <input type="checkbox" name="index" value="1.67">
+    <span>1.67 (−6.00 to +4.00)</span>
+  </label>
 
-<label>
-  <input type="checkbox" name="index" value="1.74">
-  <span style="margin-left:-25px">
-    1.74 (−10.00 to +6.00)
-  </span>
-</label>
-
-
+  <label>
+    <input type="checkbox" name="index" value="1.74">
+    <span>1.74 (−10.00 to +6.00)</span>
+  </label>
 </div>
+
 <div class="rx-row">
   <div class="rx-label"> </div>
 
-<label>
-  <input type="checkbox" name="index" value="PolyTrivex">
-  <span style="margin-left:-25px">
-    Safety
-      Polycarb / Trivex · Impact resistant
-  </span>
-</label>
-
+  <label>
+    <input type="checkbox" name="index" value="PolyTrivex">
+    <span>Safety Polycarb / Trivex · Impact resistant</span>
+  </label>
 </div>
 
 
@@ -859,6 +859,8 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 </div>
 
 </div>
+
+
 
 <script>
 function toggleLensResults() {
@@ -1367,10 +1369,6 @@ function matchesLensDesignFilter(
 }
 
 
-/* =========================================================
-   MAIN SEARCH
-========================================================= */
-
 function runLensSearch() {
 
   const search =
@@ -1403,6 +1401,92 @@ function runLensSearch() {
   const selectedIndexes =
     getCheckedValues("index");
 
+
+  /* =================================================
+     EVERY FILTER MUST HAVE ONE SELECTION
+  ================================================= */
+
+  const filters = [
+    {
+      name: "Frame Type",
+      values: selectedFrames
+    },
+    {
+      name: "RX Type",
+      values: selectedRx
+    },
+    {
+      name: "Lens Design",
+      values: selectedDesigns
+    },
+    {
+      name: "Lens Type",
+      values: selectedLensTypes
+    },
+    {
+      name: "Protection",
+      values: selectedProtection
+    }
+  ];
+
+
+  /*
+    If ANY filter has no selection,
+    do not return lens results.
+  */
+
+  const missingFilter =
+    filters.find(
+      filter => filter.values.length === 0
+    );
+
+
+  if (missingFilter) {
+
+    const container =
+      document.getElementById("lensResults");
+
+    const count =
+      document.getElementById("lensCount");
+
+
+    if (count) {
+
+      count.innerHTML = `
+        <div style="
+          font-size:14px;
+          font-weight:600;
+        ">
+          Please select one option from every filter.
+        </div>
+      `;
+
+    }
+
+
+    if (container) {
+
+      container.innerHTML = `
+        <div style="
+          padding:20px;
+          text-align:center;
+          opacity:0.7;
+        ">
+          Please select one option from every filter.
+        </div>
+      `;
+
+    }
+
+
+    return;
+
+  }
+
+
+  /* =================================================
+     NORMAL FILTERING CONTINUES BELOW
+  ================================================= */
 
   const filtered =
     lensData.filter(product => {
@@ -1518,9 +1602,6 @@ function runLensSearch() {
         const protectionMatch =
           selectedProtection.some(type => {
 
-
-            /* UV 400 */
-
             if (type === "UV400") {
 
               const value =
@@ -1536,8 +1617,6 @@ function runLensSearch() {
 
             }
 
-
-            /* Blue Light Filter */
 
             if (type === "BLF") {
 
@@ -1569,85 +1648,80 @@ function runLensSearch() {
       }
 
 
-/* =================================================
-   INDEX
-================================================= */
+      /* =================================================
+         INDEX
+      ================================================= */
 
-if (selectedIndexes.length > 0) {
+      if (selectedIndexes.length > 0) {
 
-  const productIndex =
-    normalize(product.Index);
+        const productIndex =
+          normalize(product.Index);
 
 
-  const indexMatch =
-    selectedIndexes.some(selected => {
+        const indexMatch =
+          selectedIndexes.some(selected => {
 
-      /* 1.50 OR 1.56 */
 
-      if (selected === "1.5") {
+            if (selected === "1.5") {
 
-        return (
-          productIndex === "1.5" ||
-          productIndex === "1.50" ||
-          productIndex === "1.56"
-        );
+              return (
+                productIndex === "1.5" ||
+                productIndex === "1.50" ||
+                productIndex === "1.56"
+              );
+
+            }
+
+
+            if (selected === "PolyTrivex") {
+
+              return (
+                productIndex === "pc" ||
+                productIndex === "polycarb" ||
+                productIndex === "polycarbonate" ||
+                productIndex === "trivex"
+              );
+
+            }
+
+
+            if (selected === "1.6") {
+
+              return (
+                productIndex === "1.6" ||
+                productIndex === "1.60" ||
+                productIndex === "1.61"
+              );
+
+            }
+
+
+            if (selected === "1.67") {
+
+              return productIndex === "1.67";
+
+            }
+
+
+            if (selected === "1.74") {
+
+              return productIndex === "1.74";
+
+            }
+
+
+            return false;
+
+          });
+
+
+        if (!indexMatch) {
+
+          return false;
+
+        }
 
       }
-
-/* Polycarb / Trivex */
-
-if (selected === "PolyTrivex") {
-
-  return (
-    productIndex === "pc" ||
-    productIndex === "polycarb" ||
-    productIndex === "polycarbonate" ||
-    productIndex === "trivex"
-  );
-
-}
-
-      /* 1.60 OR 1.61 */
-
-      if (selected === "1.6") {
-
-        return (
-          productIndex === "1.6" ||
-          productIndex === "1.60" ||
-          productIndex === "1.61"
-        );
-
-      }
-
-
-      /* 1.67 */
-
-      if (selected === "1.67") {
-
-        return productIndex === "1.67";
-
-      }
-
-
-      /* 1.74 */
-
-      if (selected === "1.74") {
-
-        return productIndex === "1.74";
-
-      }
-
-
-      return false;
-
-    });
-
-
-  if (!indexMatch) {
-    return false;
-  }
-
-}
 
 
       return true;
@@ -1659,6 +1733,24 @@ if (selected === "PolyTrivex") {
     "Filtered results:",
     filtered.length
   );
+
+filtered.sort((a, b) => {
+
+  const priceA =
+    parseFloat(
+      String(getSelectedPrice(a).price)
+        .replace(/[^0-9.]/g, "")
+    ) || 0;
+
+  const priceB =
+    parseFloat(
+      String(getSelectedPrice(b).price)
+        .replace(/[^0-9.]/g, "")
+    ) || 0;
+
+  return priceA - priceB;
+
+});
 
 
   displayLensResults(filtered);
@@ -1811,38 +1903,29 @@ function displayLensResults(results) {
 
 function getFrameSuitability(product) {
 
-  const rxTypes =
-    getProductRxTypes(product);
+  const selectedRx =
+    getCheckedValues("rxType")[0];
 
-  const values = [];
+  if (selectedRx === "Plus") {
 
-  if (rxTypes.includes("Plus")) {
-
-    const plus =
-      String(
-        product.Frame_Type_Plus || ""
-      ).trim();
-
-    if (plus && plus !== "-") {
-      values.push(plus);
-    }
+    return String(
+      product.Frame_Type_Plus || "-"
+    ).trim();
 
   }
 
-  if (rxTypes.includes("Minus")) {
+  if (
+    selectedRx === "Minus" ||
+    selectedRx === "Plano"
+  ) {
 
-    const minus =
-      String(
-        product.Frame_Type_Minus || ""
-      ).trim();
-
-    if (minus && minus !== "-") {
-      values.push(minus);
-    }
+    return String(
+      product.Frame_Type_Minus || "-"
+    ).trim();
 
   }
 
-  return [...new Set(values)].join(", ") || "-";
+  return "-";
 
 }
 
@@ -1874,7 +1957,23 @@ function getFrameSuitability(product) {
               font-weight:700;
               margin-bottom:12px;
             ">
+
+   <strong>
+                  ${escapeHTML(product.Index)}
+
+                  ${escapeHTML(
+                    getSelectedPrice(product).label
+                  )}
+                </strong>
+<br>
+
               ${escapeHTML(product.Product)}
+
+                <br>
+
+                RM ${escapeHTML(
+                  getSelectedPrice(product).price
+                )}
             </div>
 
 
@@ -1887,25 +1986,10 @@ function getFrameSuitability(product) {
 
               <div>
 <div>
-  <strong>Frame Suitability:</strong>
-  ${escapeHTML(
-    getFrameSuitability(product)
-  )}
+<strong>Frame Suitability:</strong> ${escapeHTML(getFrameSuitability(product))}
 </div>
 
-                <strong>
-                  ${escapeHTML(product.Index)}
-
-                  ${escapeHTML(
-                    getSelectedPrice(product).label
-                  )}
-                </strong>
-
-                :
-
-                RM ${escapeHTML(
-                  getSelectedPrice(product).price
-                )}
+             
 
               </div>
 
