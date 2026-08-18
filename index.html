@@ -628,6 +628,1319 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
 </div>
 
+
+
+
+
+
+  <div class="section">
+
+    <h2 class="section-title">Search Lens Details </h2>
+
+<div id="lensFilters">
+
+<div class="search-row">
+  <input
+    type="text"
+    id="lensSearch"
+    placeholder="Search lenses..."
+    autocomplete="off"
+  >
+</div>
+
+  <!-- Frame Type -->
+  <div class="rx-row">
+    <div class="rx-label">Frame Type</div>
+
+<label>
+  <input type="checkbox" name="frameType" value="Full">
+  <span style="margin-left:-25px">Full</span>
+</label>
+
+<label>
+  <input type="checkbox" name="frameType" value="Half">
+  <span style="margin-left:-25px">Half</span>
+</label>
+
+<label>
+  <input type="checkbox" name="frameType" value="Rimless">
+  <span style="margin-left:-25px">Rimless</span>
+</label>
+</div>
+
+
+<!-- Rx Type -->
+<div class="rx-row">
+  <div class="rx-label">Rx Type</div>
+
+  <label>
+    <input type="checkbox" name="rxType" value="Plus">
+    <span style="margin-left:-25px">Plus RX</span>
+  </label>
+
+  <label>
+    <input type="checkbox" name="rxType" value="Minus">
+    <span style="margin-left:-25px">Minus / Plano RX</span>
+  </label>
+</div>
+
+
+<!-- Lens Design -->
+<div class="rx-row">
+  <div class="rx-label">Lens Design</div>
+
+  <label>
+    <input type="checkbox" name="lensDesign" value="SV">
+    <span style="margin-left:-25px">Single Vision</span>
+  </label>
+
+  <label>
+    <input type="checkbox" name="lensDesign" value="MF">
+    <span style="margin-left:-25px">Progressive</span>
+  </label>
+
+  <label>
+    <input type="checkbox" name="lensDesign" value="MYO">
+    <span style="margin-left:-25px">Myopia Control</span>
+  </label>
+</div>
+
+<!-- Clear / Photo / Tint -->
+<div class="rx-row">
+  <div class="rx-label">Lens Type</div>
+
+  <label>
+    <input type="checkbox" name="lensType" value="Clear">
+    <span style="margin-left:-25px">Clear</span>
+  </label>
+
+  <label>
+    <input type="checkbox" name="lensType" value="Photo">
+    <span style="margin-left:-25px">Photo</span>
+  </label>
+
+  <label>
+    <input type="checkbox" name="lensType" value="Tint">
+    <span style="margin-left:-25px">Tint</span>
+  </label>
+
+<label>
+  <input type="checkbox" name="lensType" value="Pol">
+  <span style="margin-left:-25px">Pol</span>
+</label>
+
+</div>
+
+
+<!-- UV / Blue Light -->
+<div class="rx-row">
+  <div class="rx-label">Protection</div>
+
+  <label>
+    <input type="checkbox" name="protection" value="UV400">
+    <span style="margin-left:-25px">UV 400 Only</span>
+  </label>
+
+  <label>
+    <input type="checkbox" name="protection" value="BLF">
+    <span style="margin-left:-25px">Blue Light Filter</span>
+  </label>
+</div>
+
+
+<!-- Index -->
+<div class="rx-row">
+  <div class="rx-label">Index</div>
+<label>
+  <input type="checkbox" name="index" value="1.5">
+  <span style="margin-left:-25px">
+    1.50 (−2.00 to +1.00)
+  </span>
+</label>
+
+<label>
+  <input type="checkbox" name="index" value="1.6">
+  <span style="margin-left:-25px">
+    1.60 (−4.00 to +2.00)
+  </span>
+</label>
+
+</div>
+<div class="rx-row">
+  <div class="rx-label"> </div>
+
+<label>
+  <input type="checkbox" name="index" value="1.67">
+  <span style="margin-left:-25px">
+    1.67 (−6.00 to +4.00)
+  </span>
+</label>
+
+<label>
+  <input type="checkbox" name="index" value="1.74">
+  <span style="margin-left:-25px">
+    1.74 (−10.00 to +6.00)
+  </span>
+</label>
+
+
+</div>
+<div class="rx-row">
+  <div class="rx-label"> </div>
+
+<label>
+  <input type="checkbox" name="index" value="PolyTrivex">
+  <span style="margin-left:-25px">
+    Safety
+      Polycarb / Trivex · Impact resistant
+  </span>
+</label>
+
+</div>
+
+
+
+
+
+</div>
+<div style="
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+">
+
+
+  <button
+    style="height:25px; padding:5px 15px"
+    class="normal toggleBtn"
+    onclick="toggleLensResults()">
+    Show Results
+  </button>
+  <div id="lensCount"></div>
+
+
+
+</div>
+
+
+
+<script>
+function toggleLensResults() {
+
+  const div =
+    document.getElementById("lensResultsToggle");
+
+  if (!div) return;
+
+  if (div.style.display === "none") {
+
+    div.style.display = "";
+
+  } else {
+
+    div.style.display = "none";
+
+  }
+
+}
+</script>
+
+<div style="display:none" id="lensResultsToggle">
+<div id="lensResults"></div></div>
+
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.5.3/papaparse.min.js"></script>
+
+<script>
+
+let lensData = [];
+
+
+/* =========================================================
+   CSV
+========================================================= */
+
+const CSV_URL =
+  "https://raw.githubusercontent.com/sp-rx/OL-selector_2/main/NEW_OL_LIST_CSV.csv";
+
+
+/* =========================================================
+   LOAD CSV
+========================================================= */
+
+Papa.parse(CSV_URL, {
+
+  download: true,
+
+  header: true,
+
+  skipEmptyLines: true,
+
+  complete: function(results) {
+
+    lensData = results.data.filter(row =>
+      row.Product &&
+      row.Product.trim() !== ""
+    );
+
+    console.log(
+      "CSV loaded:",
+      lensData.length,
+      "products"
+    );
+
+    runLensSearch();
+
+  },
+
+  error: function(error) {
+
+    console.error(
+      "CSV loading error:",
+      error
+    );
+
+    document.getElementById("lensResults").innerHTML =
+      "<p>Unable to load lens list.</p>";
+
+  }
+
+});
+
+
+/* =========================================================
+   NORMALIZE TEXT
+========================================================= */
+
+function normalize(value) {
+
+  return String(value || "")
+    .toLowerCase()
+    .trim();
+
+}
+
+
+/* =========================================================
+   SPLIT CSV CELL
+   Example:
+   "Plus, Minus"
+   becomes:
+   ["Plus", "Minus"]
+========================================================= */
+
+function splitValues(value) {
+
+  return String(value || "")
+    .split(",")
+    .map(x => x.trim())
+    .filter(Boolean);
+
+}
+
+
+/* =========================================================
+   FUZZY SEARCH
+========================================================= */
+
+function fuzzyMatch(text, search) {
+
+  search = normalize(search);
+
+  if (!search) {
+    return true;
+  }
+
+  text = normalize(text);
+
+
+  /* Exact phrase */
+
+  if (text.includes(search)) {
+    return true;
+  }
+
+
+  /* Search each word */
+
+  const searchWords =
+    search
+      .split(/\s+/)
+      .filter(Boolean);
+
+
+  const textWords =
+    text
+      .split(/\s+/)
+      .filter(Boolean);
+
+
+  return searchWords.every(searchWord => {
+
+    return textWords.some(textWord => {
+
+      /* Partial match */
+
+      if (textWord.includes(searchWord)) {
+        return true;
+      }
+
+
+      /* Fuzzy match */
+
+      const distance =
+        levenshteinDistance(
+          searchWord,
+          textWord
+        );
+
+
+      const allowedDistance =
+        searchWord.length <= 4 ? 1 :
+        searchWord.length <= 7 ? 2 :
+        3;
+
+
+      return distance <= allowedDistance;
+
+    });
+
+  });
+
+}
+
+
+/* =========================================================
+   LEVENSHTEIN DISTANCE
+========================================================= */
+
+function levenshteinDistance(a, b) {
+
+  const matrix = [];
+
+
+  for (let i = 0; i <= b.length; i++) {
+    matrix[i] = [i];
+  }
+
+
+  for (let j = 0; j <= a.length; j++) {
+    matrix[0][j] = j;
+  }
+
+
+  for (let i = 1; i <= b.length; i++) {
+
+    for (let j = 1; j <= a.length; j++) {
+
+      if (
+        b.charAt(i - 1) ===
+        a.charAt(j - 1)
+      ) {
+
+        matrix[i][j] =
+          matrix[i - 1][j];
+
+      } else {
+
+        matrix[i][j] =
+          Math.min(
+
+            matrix[i - 1][j] + 1,
+
+            matrix[i][j - 1] + 1,
+
+            matrix[i - 1][j - 1] + 1
+
+          );
+
+      }
+
+    }
+
+  }
+
+
+  return matrix[b.length][a.length];
+
+}
+
+
+/* =========================================================
+   GET CHECKED VALUES
+========================================================= */
+
+function getCheckedValues(name) {
+
+  return [
+    ...document.querySelectorAll(
+      `input[name="${name}"]:checked`
+    )
+  ].map(input => input.value);
+
+}
+
+
+/* =========================================================
+   GET RX TYPES FROM CSV
+=========================================================
+
+   Examples:
+
+   "Plus"
+      → ["Plus"]
+
+   "Minus"
+      → ["Minus"]
+
+   "Plus, Minus"
+      → ["Plus", "Minus"]
+
+   Plano is treated as Minus.
+========================================================= */
+
+function getProductRxTypes(product) {
+
+  const values =
+    splitValues(product.Rx_Type);
+
+  const result = [];
+
+
+  values.forEach(value => {
+
+    const rx =
+      normalize(value);
+
+
+    if (rx === "plus") {
+      result.push("Plus");
+    }
+
+
+    if (
+      rx === "minus" ||
+      rx === "plano"
+    ) {
+      result.push("Minus");
+    }
+
+  });
+
+
+  return [...new Set(result)];
+
+}
+
+
+/* =========================================================
+   CHECK FRAME COMPATIBILITY
+========================================================= */
+
+function frameSupports(product, rxType, frameType) {
+
+  const frame =
+    normalize(frameType);
+
+
+  let column = "";
+
+
+  if (rxType === "Plus") {
+
+    column =
+      product.Frame_Type_Plus;
+
+  }
+
+
+  else if (rxType === "Minus") {
+
+    column =
+      product.Frame_Type_Minus;
+
+  }
+
+
+  return splitValues(column)
+    .some(value =>
+      normalize(value) === frame
+    );
+
+}
+
+
+/* =========================================================
+   FRAME FILTER
+========================================================= */
+
+function matchesFrameFilter(
+  product,
+  selectedFrames,
+  selectedRx
+) {
+
+  if (selectedFrames.length === 0) {
+    return true;
+  }
+
+
+  const productRxTypes =
+    getProductRxTypes(product);
+
+
+  /*
+    If RX is selected:
+    use the appropriate Frame_Type column.
+  */
+
+  if (selectedRx.length > 0) {
+
+    return selectedRx.some(rx => {
+
+      /*
+        Product must support this RX.
+      */
+
+      if (!productRxTypes.includes(rx)) {
+        return false;
+      }
+
+
+      /*
+        Then at least one selected
+        frame type must be compatible.
+      */
+
+      return selectedFrames.some(frame =>
+
+        frameSupports(
+          product,
+          rx,
+          frame
+        )
+
+      );
+
+    });
+
+  }
+
+
+  /*
+    If no RX filter is selected,
+    check both Plus and Minus
+    frame columns.
+  */
+
+  return selectedFrames.some(frame => {
+
+    return (
+      frameSupports(product, "Plus", frame) ||
+      frameSupports(product, "Minus", frame)
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   RX FILTER
+========================================================= */
+
+function matchesRxFilter(
+  product,
+  selectedRx
+) {
+
+  if (selectedRx.length === 0) {
+    return true;
+  }
+
+
+  const productRxTypes =
+    getProductRxTypes(product);
+
+
+  /*
+    Multiple selected RX types = OR.
+  */
+
+  return selectedRx.some(rx =>
+    productRxTypes.includes(rx)
+  );
+
+}
+
+
+/* =========================================================
+   LENS DESIGN FILTER
+========================================================= */
+
+function matchesLensDesignFilter(
+  product,
+  selectedDesigns
+) {
+
+  if (selectedDesigns.length === 0) {
+    return true;
+  }
+
+
+  const design =
+    normalize(product.Lens_Design);
+
+
+  /*
+    Your CSV uses:
+
+    Stock Sv
+    Custom Sv
+    Custom MF
+    Custom Myo
+
+    So we check whether the selected
+    design code exists inside the value.
+  */
+
+  return selectedDesigns.some(selected => {
+
+    return design.includes(
+      normalize(selected)
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   MAIN SEARCH
+========================================================= */
+
+function runLensSearch() {
+
+  const search =
+    document
+      .getElementById("lensSearch")
+      .value
+      .trim();
+
+
+  const selectedFrames =
+    getCheckedValues("frameType");
+
+
+  const selectedRx =
+    getCheckedValues("rxType");
+
+
+  const selectedDesigns =
+    getCheckedValues("lensDesign");
+
+
+  const selectedLensTypes =
+    getCheckedValues("lensType");
+
+
+  const selectedProtection =
+    getCheckedValues("protection");
+
+
+  const selectedIndexes =
+    getCheckedValues("index");
+
+
+  const filtered =
+    lensData.filter(product => {
+
+
+      /* =================================================
+         MANUAL SEARCH
+      ================================================= */
+
+      const searchableText =
+        Object.values(product)
+          .join(" ");
+
+
+      if (
+        !fuzzyMatch(
+          searchableText,
+          search
+        )
+      ) {
+
+        return false;
+
+      }
+
+
+      /* =================================================
+         RX TYPE
+      ================================================= */
+
+      if (
+        !matchesRxFilter(
+          product,
+          selectedRx
+        )
+      ) {
+
+        return false;
+
+      }
+
+
+      /* =================================================
+         LENS DESIGN
+      ================================================= */
+
+      if (
+        !matchesLensDesignFilter(
+          product,
+          selectedDesigns
+        )
+      ) {
+
+        return false;
+
+      }
+
+
+      /* =================================================
+         FRAME TYPE
+      ================================================= */
+
+      if (
+        !matchesFrameFilter(
+          product,
+          selectedFrames,
+          selectedRx
+        )
+      ) {
+
+        return false;
+
+      }
+
+
+      /* =================================================
+         CLEAR / PHOTO / TINT
+      ================================================= */
+
+      if (selectedLensTypes.length > 0) {
+
+        const lensType =
+          normalize(
+            product.Clear_Photo_Tint_Pol
+          );
+
+
+        const lensTypeMatch =
+          selectedLensTypes.some(type => {
+
+            return lensType.includes(
+              normalize(type)
+            );
+
+          });
+
+
+        if (!lensTypeMatch) {
+
+          return false;
+
+        }
+
+      }
+
+
+      /* =================================================
+         UV 400 / BLUE LIGHT FILTER
+      ================================================= */
+
+      if (selectedProtection.length > 0) {
+
+        const protectionMatch =
+          selectedProtection.some(type => {
+
+
+            /* UV 400 */
+
+            if (type === "UV400") {
+
+              const value =
+                String(
+                  product.Uv_400_Rm || ""
+                ).trim();
+
+
+              return (
+                value !== "" &&
+                value !== "-"
+              );
+
+            }
+
+
+            /* Blue Light Filter */
+
+            if (type === "BLF") {
+
+              const value =
+                String(
+                  product.Blf_Rm || ""
+                ).trim();
+
+
+              return (
+                value !== "" &&
+                value !== "-"
+              );
+
+            }
+
+
+            return false;
+
+          });
+
+
+        if (!protectionMatch) {
+
+          return false;
+
+        }
+
+      }
+
+
+/* =================================================
+   INDEX
+================================================= */
+
+if (selectedIndexes.length > 0) {
+
+  const productIndex =
+    normalize(product.Index);
+
+
+  const indexMatch =
+    selectedIndexes.some(selected => {
+
+      /* 1.50 OR 1.56 */
+
+      if (selected === "1.5") {
+
+        return (
+          productIndex === "1.5" ||
+          productIndex === "1.50" ||
+          productIndex === "1.56"
+        );
+
+      }
+
+/* Polycarb / Trivex */
+
+if (selected === "PolyTrivex") {
+
+  return (
+    productIndex === "pc" ||
+    productIndex === "polycarb" ||
+    productIndex === "polycarbonate" ||
+    productIndex === "trivex"
+  );
+
+}
+
+      /* 1.60 OR 1.61 */
+
+      if (selected === "1.6") {
+
+        return (
+          productIndex === "1.6" ||
+          productIndex === "1.60" ||
+          productIndex === "1.61"
+        );
+
+      }
+
+
+      /* 1.67 */
+
+      if (selected === "1.67") {
+
+        return productIndex === "1.67";
+
+      }
+
+
+      /* 1.74 */
+
+      if (selected === "1.74") {
+
+        return productIndex === "1.74";
+
+      }
+
+
+      return false;
+
+    });
+
+
+  if (!indexMatch) {
+    return false;
+  }
+
+}
+
+
+      return true;
+
+    });
+
+
+  console.log(
+    "Filtered results:",
+    filtered.length
+  );
+
+
+  displayLensResults(filtered);
+
+}
+
+
+function getSelectedPrice(product) {
+
+  /* =========================
+     SELECTED LENS TYPE
+  ========================= */
+
+  const selectedLensType =
+    getCheckedValues("lensType")[0];
+
+
+  /* =========================
+     SELECTED PROTECTION
+  ========================= */
+
+  const selectedProtection =
+    getCheckedValues("protection")[0];
+
+
+  /* =========================
+     DETERMINE PRICE
+  ========================= */
+
+  let price = "-";
+  let label = "Price";
+
+
+  /*
+    UV 400 selected
+    → use Uv_400_Rm
+  */
+
+  if (selectedProtection === "UV400") {
+
+    price =
+      product.Uv_400_Rm || "-";
+
+    label = "UV 400 Only";
+
+  }
+
+
+  /*
+    Blue Light Filter selected
+    → use Blf_Rm
+  */
+
+  else if (selectedProtection === "BLF") {
+
+    price =
+      product.Blf_Rm || "-";
+
+    label = "Blue Light Filter";
+
+  }
+
+
+  /*
+    No protection selected
+    → use normal lens price
+  */
+
+  else {
+
+    price =
+      product.Uv_400_Rm || "-";
+
+    label = selectedLensType || "Price";
+
+  }
+
+
+  /* =========================
+     LENS TYPE LABEL
+  ========================= */
+
+  if (
+    selectedLensType &&
+    selectedProtection
+  ) {
+
+    label =
+      selectedLensType +
+      " " +
+      (
+        selectedProtection === "UV400"
+          ? "UV 400"
+          : "Blue Light Filter"
+      );
+
+  }
+
+
+  return {
+    label: label,
+    price: price
+  };
+
+}
+
+
+function displayLensResults(results) {
+
+  const container =
+    document.getElementById("lensResults");
+
+  const count =
+    document.getElementById("lensCount");
+
+
+  /* =========================
+     UPDATE COUNT
+  ========================= */
+
+  count.innerHTML = `
+    <div style="
+      font-size:14px;
+      font-weight:600;
+    ">
+      ${results.length}
+      ${results.length === 1 ? "lens" : "lenses"} found
+    </div>
+  `;
+
+
+  /* =========================
+     NO RESULTS
+  ========================= */
+
+  if (!results.length) {
+
+    container.innerHTML = `
+      <div style="
+        padding:20px;
+        text-align:center;
+        opacity:0.7;
+      ">
+        No matching lenses found.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  /* =========================
+     RESULTS
+  ========================= */
+
+  container.innerHTML = `
+
+    <div id="lensResultsToggle">
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+        gap:15px;
+      ">
+
+        ${results.map(product => `
+
+          <div style="
+            border:1px solid var(--border, #ddd);
+            border-radius:12px;
+            padding:16px;
+            background:var(--card, #fff);
+          ">
+
+            <div style="
+              font-size:16px;
+              font-weight:700;
+              margin-bottom:12px;
+            ">
+              ${escapeHTML(product.Product)}
+            </div>
+
+
+            <div style="
+              display:grid;
+              gap:6px;
+              font-size:13px;
+            ">
+
+
+              <div>
+
+                <strong>
+                  ${escapeHTML(product.Index)}
+
+                  ${escapeHTML(
+                    getSelectedPrice(product).label
+                  )}
+                </strong>
+
+                :
+
+                RM ${escapeHTML(
+                  getSelectedPrice(product).price
+                )}
+
+              </div>
+
+
+              <div style="
+                margin-top:8px;
+                padding-top:8px;
+                border-top:1px solid var(--border, #ddd);
+              ">
+
+                <strong>Description:</strong><br>
+
+                ${escapeHTML(product.Description)}
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   SEARCH BAR
+========================================================= */
+
+document
+  .getElementById("lensSearch")
+  .addEventListener(
+    "input",
+    runLensSearch
+  );
+
+
+/* =========================================================
+   CHECKBOXES
+   Only ONE can be selected per filter group
+========================================================= */
+
+const filterGroups = [
+  "frameType",
+  "rxType",
+  "lensDesign",
+  "lensType",
+  "protection",
+  "index"
+];
+
+
+filterGroups.forEach(group => {
+
+  const checkboxes =
+    document.querySelectorAll(
+      `input[name="${group}"]`
+    );
+
+
+  checkboxes.forEach(checkbox => {
+
+    checkbox.addEventListener("change", function() {
+
+      if (this.checked) {
+
+        checkboxes.forEach(other => {
+
+          if (other !== this) {
+            other.checked = false;
+          }
+
+        });
+
+      }
+
+      runLensSearch();
+
+    });
+
+  });
+
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <!-- WEARER DETAILS -->
   <div class="section">
 <h2>
