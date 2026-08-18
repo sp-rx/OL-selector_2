@@ -1,11 +1,11 @@
-﻿Product,Lens_Design,Rx_Type,Frame_Type_Plus,Frame_Type_Minus,Index,Clear_Photo_Tint_Pol,Extra_Note,Uv_400_Rm,Blf_Rm,Description
+Product,Lens_Design,Rx_Type,Frame_Type_Plus,Frame_Type_Minus,Index,Clear_Photo_Tint_Pol,Extra_Note,Uv_400_Rm,Blf_Rm,Description
 Everyday Stock Single Vision Sv,Stock Sv,"Plus, Minus",Full,Full,1.56,Clear,-,350,350,Lenses That Meet Everyday Use.
 Everyday Stock Single Vision Sv,Stock Sv,"Plus, Minus",Full,"Full, Half, Rimless",1.6,Clear,-,450,450,Lenses That Meet Everyday Use.
 Everyday Stock Single Vision Sv,Stock Sv,Minus,-,"Full, Half, Rimless",1.67,Clear,-,650,650,Lenses That Meet Everyday Use.
 Everyday Stock Single Vision Sv,Stock Sv,Minus,-,"Full, Half, Rimless",1.74,Clear,-,850,850,Lenses That Meet Everyday Use.
 Everyday Stock Single Vision Sv,Stock Sv,"Plus, Minus",Full,Full,1.56,Photo,Grey,550,550,Lenses That Meet Everyday Use.
 Everyday Stock Single Vision Sv,Stock Sv,Minus,-,"Full, Half, Rimless",1.6,Photo,Grey,650,650,Lenses That Meet Everyday Use.
-Everyday Stock Single Vision Sv,Stock Sv,Minus,-,"Full, Half, Rimless",Pc,Clear,-,450,450,Lenses That Meet Everyday Use.
+Everyday Stock Single Vision Sv,Stock Sv,Minus,-,"Full, Half, Rimless",Polycarb,Clear,-,450,450,Lenses That Meet Everyday Use.
 Premium Stock Single Vision Sv,Stock Sv,"Plus, Minus",Full,Full,1.56,Clear,-,450,450,Premium Lenses That Have Wider Peripheral View.
 Premium Stock Single Vision Sv,Stock Sv,Minus,-,"Full, Half, Rimless",1.6,Clear,-,550,550,Premium Lenses That Have Wider Peripheral View.
 Premium Stock Single Vision Sv,Stock Sv,Minus,-,"Full, Half, Rimless",1.67,Clear,-,750,750,Premium Lenses That Have Wider Peripheral View.
@@ -15,19 +15,19 @@ Custom Single Vision Sv,Custom Sv,"Plus, Minus",Full,Full,1.56,Clear,-,750,750,L
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Clear,-,850,850,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Clear,-,1050,1050,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Clear,-,1350,1350,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
-Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Pc,Clear,-,850,850,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
+Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Clear,-,850,850,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Clear,-,850,850,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus",Full,Full,1.56,Photo,Grey,1250,1250,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Photo,Grey,1350,1350,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Photo,Grey,1550,1550,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Photo,Grey,1850,1850,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
-Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Pc,Photo,Grey,1350,1350,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
+Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Photo,Grey,1350,1350,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Photo,Grey,1350,1350,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus",Full,Full,1.56,Tint,-,950,950,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Tint,-,1050,1050,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Tint,-,1250,1250,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Tint,-,1550,1550,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
-Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Pc,Tint,-,1050,1050,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
+Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Tint,-,1050,1050,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Custom Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Tint,-,1050,1050,Lenses That Are Made Upon Order To Fit Special Sizes And Curves. Have Very Wide Peripheral View.
 Atoric Single Vision Sv,Custom Sv,"Plus, Minus",Full,Full,1.56,Clear,-,950,950,The Highest Quality Single Vision Lenses; Made Upon Order And Enhance Peripheral View For Astigmatism Prescriptions.
 Atoric Single Vision Sv,Custom Sv,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Clear,-,1050,1050,The Highest Quality Single Vision Lenses; Made Upon Order And Enhance Peripheral View For Astigmatism Prescriptions.
@@ -47,7 +47,7 @@ Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.6,Clear,-,
 Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.67,Clear,-,1500,1600,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
 Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.74,Clear,-,2400,2500,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
 Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",Trivex,Clear,-,1200,1400,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
-Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",PC,Clear,-,1300,1500,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
+Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",Polycarb,Clear,-,1300,1500,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
 Myocraft Single Vision Myo,Custom Myo,Minus,-,Full,1.56,Photo,Grey,1100,1400,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
 Myocraft Single Vision Myo,Custom Myo,Minus,-,Full,1.56,Photo,"Grey, Brown, Green, Pink, Blue",-,1600,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
 Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.6,Photo,Grey,-,1700,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
@@ -59,18 +59,18 @@ Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.6,Tint,Any
 Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.67,Tint,Any Colour,1700,1800,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
 Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.74,Tint,Any Colour,2600,-,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
 Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",Trivex,Tint,Any Colour,1400,-,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
-Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",PC,Tint,Any Colour,1500,-,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
+Myocraft Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",Polycarb,Tint,Any Colour,1500,-,A different type of myopia control lenses that has peripheral defocus but not the central middle and central lower.
 MXKid Single Vision Myo,Custom Myo,Minus,-,Full,1.56,Clear,-,1000,1100,The myopia control lenses that have peripheral defocus using many smaller lenses.
 MXKid Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.6,Clear,-,1200,1300,The myopia control lenses that have peripheral defocus using many smaller lenses.
 MXKid Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",1.67,Clear,-,1600,1700,The myopia control lenses that have peripheral defocus using many smaller lenses.
-MXKid Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",PC,Clear,-,1100,1300,The myopia control lenses that have peripheral defocus using many smaller lenses.
+MXKid Single Vision Myo,Custom Myo,Minus,-,"Full, Half, Rimless",Polycarb,Clear,-,1100,1300,The myopia control lenses that have peripheral defocus using many smaller lenses.
 Office Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.5,Clear,-,900,-,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Clear,-,1000,1200,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Clear,-,1100,1300,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Clear,-,1500,1600,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Clear,-,2400,2500,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Clear,-,1200,1400,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
-Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Clear,-,1300,1500,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
+Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Clear,-,1300,1500,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,Grey,1100,1400,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,"Grey, Brown, Green, Pink, Blue",-,1600,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Photo,Grey,-,1700,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
@@ -82,14 +82,14 @@ Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, H
 Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Tint,Any Colour,1700,1800,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Tint,Any Colour,2600,-,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Tint,Any Colour,1400,-,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
-Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Tint,Any Colour,1500,-,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
+Office Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Tint,Any Colour,1500,-,Progressive lenses that are designed for coverage on the workarea; between 100cm to 30cm.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.5,Clear,-,900,-,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Clear,-,1000,1200,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Clear,-,1100,1300,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Clear,-,1500,1600,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Clear,-,2400,2500,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Clear,-,1200,1400,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
-Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Clear,-,1300,1500,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
+Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Clear,-,1300,1500,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,Grey,1100,1400,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,"Grey, Brown, Green, Pink, Blue",-,1600,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Photo,Grey,-,1700,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
@@ -101,7 +101,7 @@ Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Tint,Any Colour,1700,1800,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Tint,Any Colour,2600,-,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Tint,Any Colour,1400,-,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
-Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Tint,Any Colour,1500,-,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
+Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Tint,Any Colour,1500,-,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.5,Pol,Grey,1100,-,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Pol,Grey,1400,-,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
 Digital Relax Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Pol,Grey,1900,-,Progressive lenses that are designed to relieve headaches and eye strains from using digital devices.
@@ -111,7 +111,7 @@ Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Ful
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Clear,-,1600,1700,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Clear,-,2500,2600,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Clear,-,1300,1500,Basic progressive lenses that are good for low power addition.
-Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Clear,-,1400,1600,Basic progressive lenses that are good for low power addition.
+Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Clear,-,1400,1600,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,Grey,1200,1500,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,"Grey, Brown, Green, Pink, Blue",-,1700,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Photo,Grey,-,1800,Basic progressive lenses that are good for low power addition.
@@ -123,7 +123,7 @@ Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Ful
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Tint,Any Colour,1800,1900,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Tint,Any Colour,2700,-,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Tint,Any Colour,1500,-,Basic progressive lenses that are good for low power addition.
-Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Tint,Any Colour,1600,-,Basic progressive lenses that are good for low power addition.
+Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Tint,Any Colour,1600,-,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.5,Pol,Grey,1200,-,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Pol,Grey,1500,-,Basic progressive lenses that are good for low power addition.
 Thin Basic Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Pol,Grey,2000,-,Basic progressive lenses that are good for low power addition.
@@ -133,7 +133,7 @@ Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, H
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Clear,-,2300,2400,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Clear,-,3100,3300,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Clear,-,1900,2100,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
-Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Clear,-,2100,2300,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
+Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Clear,-,2100,2300,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,Grey,1800,2100,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,"Grey, Brown, Green, Pink, Blue",-,2300,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Photo,Grey,-,2400,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
@@ -145,7 +145,7 @@ Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, H
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Tint,Any Colour,2500,2600,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Tint,Any Colour,3300,-,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Tint,Any Colour,2100,-,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
-Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Tint,Any Colour,2300,-,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
+Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Tint,Any Colour,2300,-,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.5,Pol,Grey,1800,-,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Pol,Grey,2100,-,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Pol,Grey,2700,-,Advanced progressive lenses that are good for medium to higher power addition by improving the reading area.
@@ -155,7 +155,7 @@ Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, H
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Clear,-,3100,3300,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Clear,-,4500,4800,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Clear,-,2900,3100,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
-Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Clear,-,3100,3300,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
+Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Clear,-,3100,3300,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,Grey,2800,2900,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus",Full,Full,1.56,Photo,"Grey, Brown, Green, Pink, Blue",-,3200,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.6,Photo,Grey,-,3200,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
@@ -167,4 +167,4 @@ Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, H
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.67,Tint,Any Colour,3300,3500,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",1.74,Tint,Any Colour,4700,-,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
 Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Trivex,Tint,Any Colour,3100,-,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
-Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",PC,Tint,Any Colour,3300,-,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
+Custom Progressive Vision,Custom MF,"Plus, Minus","Full, Half, Rimless","Full, Half, Rimless",Polycarb,Tint,Any Colour,3300,-,Specialty progressive lenses that are good for higher power addition and complex prescription by compensating spectacle position and improving reading area.
