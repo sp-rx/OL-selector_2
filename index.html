@@ -269,12 +269,6 @@ textarea { min-height: 48px; resize: vertical; }
   flex-wrap: wrap;
 }
 
-
-
-.rx-row label input[type="checkbox"] {
-  margin-right: -30px;
-}
-
 .rx-row .rx-label {
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -284,7 +278,41 @@ textarea { min-height: 48px; resize: vertical; }
   font-weight: 500;
 }
 
+/* Filter options */
+.rx-row label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
+  margin: 2px 0px 2px 0;
+  padding: 5px 15px;
+  border: 1px solid var(--border, #ccc);
+  border-radius: 8px;
+  transition: 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
 
+/* Hide checkbox */
+.rx-row label input[type="checkbox"] {
+  display: none;
+}
+
+/* Selected */
+.rx-row label:has(input[type="checkbox"]:checked) {
+  background: #e8f3e9;
+  border-color: #6b9b72;
+  font-weight: 600;
+}
+
+/* Optional tap/hover effect */
+.rx-row label:hover {
+  background: #f3f3f3;
+}
+
+.rx-row label:has(input[type="checkbox"]:checked):hover {
+  background: #e8f3e9;
+}
 
 .rx-row input {
   width: 72px !important;
