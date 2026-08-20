@@ -2020,11 +2020,11 @@ function getFrameSuitability(product) {
               ">
 
                 <strong>Description:</strong><br>
-
-                - ${escapeHTML(product.Description1)}<br>
-                - ${escapeHTML(product.Description2)}<br>
-                - ${escapeHTML(product.Description3)}
-
+${product.Description1 ? `- ${escapeHTML(product.Description1)}<br>` : ""}
+${product.Description2 ? `- ${escapeHTML(product.Description2)}<br>` : ""}
+${product.Description3 ? `- ${escapeHTML(product.Description3)}<br>` : ""}
+${product.Description4 ? `- ${escapeHTML(product.Description4)}<br>` : ""}
+${product.Description5 ? `- ${escapeHTML(product.Description5)}<br>` : ""}
 
               </div>
 
