@@ -816,15 +816,15 @@ Digital Relieve
 <div class="rx-row">
   <div class="rx-label">Index</div>
 
-  <label style="margin-right:20px">
-    <input type="checkbox" name="index" value="1.5">
-    1.50 (−2.00 to +1.00)
-  </label>
+<label style="margin-right:20px">
+  <input type="checkbox" name="index" value="1.5">
+  1.50 (RX <span style="color:red;">−2.00</span> to <span style="color:green;">+1.00</span>)
+</label>
 
-  <label style="margin-right:20px">
-    <input type="checkbox" name="index" value="1.6">
-    1.60 (−4.00 to +2.00)
-  </label>
+<label style="margin-right:20px">
+  <input type="checkbox" name="index" value="1.6">
+  1.60 (RX <span style="color:red;">−4.00</span> to <span style="color:green;">+2.00</span>)
+</label>
 </div>
 
 <div class="rx-row">
@@ -832,12 +832,12 @@ Digital Relieve
 
   <label style="margin-right:20px">
     <input type="checkbox" name="index" value="1.67">
-    1.67 (−6.00 to +4.00)
+    1.67 (RX <span style="color:red;">−6.00</span> to <span style="color:green;">+4.00</span>)
   </label>
 
   <label style="margin-right:20px">
     <input type="checkbox" name="index" value="1.74">
-    1.74 (−10.00 to +6.00)
+    1.74 (RX <span style="color:red;">−10.00</span> to <span style="color:green;">+6.00</span>)
   </label>
 </div>
 
@@ -2021,7 +2021,10 @@ function getFrameSuitability(product) {
 
                 <strong>Description:</strong><br>
 
-                ${escapeHTML(product.Description)}
+                - ${escapeHTML(product.Description1)}<br>
+                - ${escapeHTML(product.Description2)}<br>
+                - ${escapeHTML(product.Description3)}
+
 
               </div>
 
