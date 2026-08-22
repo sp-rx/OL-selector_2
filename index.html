@@ -358,6 +358,12 @@ button.normal {
   min-width: 30px;
 }
 
+.frame-btn.active {
+  background-color: red !important;
+  color: white !important;
+  border-color: red !important;
+}
+
 button.normal::before {
   content: '';
   position: absolute;
@@ -706,6 +712,12 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
     <input type="checkbox" name="frameType" value="Rimless">
    Rimless
   </label>
+
+  <label style="margin-right:20px">
+    <input type="checkbox" name="frameType" value="Rimless">
+   Oakley Sunglasses
+  </label>
+
 </div>
 
 <span class="section-title" style="margin-bottom:-5px"> </span>
@@ -846,7 +858,7 @@ Digital Relieve
 
   <label style="margin-right:20px">
     <input type="checkbox" name="index" value="PolyTrivex">
-    Safety Polycarb / Trivex · Impact resistant
+    Impact Resistant (Polycarb / Trivex / Tribrid)
   </label>
 </div>
 
@@ -877,7 +889,6 @@ Digital Relieve
 
 </div>
 
-</div>
 
 
 
@@ -907,6 +918,7 @@ function toggleLensResults() {
 
 
 
+</div>
 </div>
 
 
@@ -1869,6 +1881,41 @@ function getSelectedPrice(product) {
   }
 
 
+/* =========================
+   FRAME SURCHARGE
+========================= */
+
+const selectedFrame =
+  getCheckedValues("frameType")[0];
+
+const numericPrice =
+  parseFloat(
+    String(price).replace(/[^0-9.]/g, "")
+  );
+
+let surchargeNote = "";
+
+if (!isNaN(numericPrice)) {
+
+  if (selectedFrame === "Rimless") {
+
+    price =
+      numericPrice + 100;
+
+    surchargeNote =
+      "Inclusive RM 100 edging surcharge";
+
+  }
+
+}
+
+return {
+  label: label,
+  price: price,
+  surchargeNote: surchargeNote
+};
+
+
   return {
     label: label,
     price: price
@@ -1978,21 +2025,35 @@ function getFrameSuitability(product) {
             ">
 
    <strong>
+
+              ${escapeHTML(product.Product)}
+
+<br>
                   ${escapeHTML(product.Index)}
 
                   ${escapeHTML(
                     getSelectedPrice(product).label
                   )}
                 </strong>
-<br>
-
-              ${escapeHTML(product.Product)}
-
                 <br>
 
-                RM ${escapeHTML(
-                  getSelectedPrice(product).price
-                )}
+RM ${escapeHTML(
+  getSelectedPrice(product).price
+)}
+${
+  getSelectedPrice(product).surchargeNote
+    ? `<span style="
+        font-size:12px;
+        font-weight:400;
+        margin-left:6px;
+        
+      ">
+        ~ ${escapeHTML(getSelectedPrice(product).surchargeNote)}
+      </span>`
+    : ""
+}
+
+
             </div>
 
 
@@ -2207,13 +2268,7 @@ function toggleHideShow(blockClass) {
   <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('cylOD',-1)">-</button>
   <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('cylOD',1)">+</button> 
 
-
-<button class="normal" style="height:25px;  padding:5px 15px" type="button" id="copyToggleBtn" onclick="toggleCopyMode()">
-  Normal Thickness
-</button>
-
-    </div>
-
+</div>
 
 
     <div style="display:none" class="rx-row">
@@ -2229,9 +2284,8 @@ function toggleHideShow(blockClass) {
       <span class="rx-label">Add Prescription</span>
 <select id="addPower" style="width:240px; font-size:12px">
   <option value="">No Add Power</option>
-  <option value="100">Entry +0.25 to +1.25</option>
-  <option value="150">Normal +1.00 to +1.75</option>
-  <option value="200">Premium +2.00 to +2.50</option>
+  <option value="100">Entry +0.25 to +2.00</option>
+  <option value="200">Premium +2.25 to +3.00</option>
 <!-- <option value="250">Premium +2.00 to +2.50</option> -->
 </select>
 
@@ -2241,6 +2295,8 @@ function toggleHideShow(blockClass) {
 
 
 <button style="height:25px;  padding:5px 15px" type="button" id="officeLensBtn" class="normal toggleBtnoffice" onclick="toggleOfficeLens()">Office Lens</button>
+
+
 
 
 
@@ -2267,6 +2323,53 @@ function stepAdd(dir) {
 
 
 </div>
+
+
+    <div class="rx-row">
+
+     <span class="rx-label">Frame Type</span>
+<button
+  class="normal frame-btn active"
+  style="height:25px; padding:5px 15px"
+  type="button"
+  id="fullFrameBtn">
+  Full Frame
+</button>
+
+<button
+  class="normal frame-btn"
+  style="height:25px; padding:5px 15px"
+  type="button"
+  id="halfRimlessBtn">
+  Half / Rimless / Oakley Sunglasses
+</button>
+
+<script>
+const fullFrameBtn = document.getElementById("fullFrameBtn");
+const halfRimlessBtn = document.getElementById("halfRimlessBtn");
+
+fullFrameBtn.addEventListener("click", function () {
+  fullFrameBtn.classList.add("active");
+  halfRimlessBtn.classList.remove("active");
+});
+
+halfRimlessBtn.addEventListener("click", function () {
+  halfRimlessBtn.classList.add("active");
+  fullFrameBtn.classList.remove("active");
+});
+</script>
+
+</div>
+    <div class="rx-row">
+
+     <span class="rx-label">Thickness Type</span>
+
+
+<button class="normal" style="height:25px;  padding:5px 15px" type="button" id="copyToggleBtn" onclick="toggleCopyMode()">
+  Normal Thickness
+</button>
+
+    </div>
 
 <div style="height:30px"></div>
 <div style="display:none">
@@ -2707,6 +2810,11 @@ function toggleMFVisibility() {
 
 <!-- ============ ALL SCRIPTS (unchanged logic) ============ -->
 <script>
+
+
+
+
+
 function snapToQuarter(val){
   let num = parseFloat(val);
   if (isNaN(num)) return "";
@@ -2987,7 +3095,7 @@ function showMFPair(customIndex){
 const map = {
   "100": ["075","175"],
   "150": ["200","225"],
-  "200": ["275","325"],
+  "200": ["225","325"],
   "250": ["275","325"]
 };
 
@@ -3031,22 +3139,50 @@ function updateRecommendation() {
   const customOD = calcIndex(sphOD, cylOD, "custom");
   const customOS = calcIndex(sphOS, cylOS, "custom");
 
-  const normalIndex = (normalOD === "N/A" || normalOS === "N/A") ? "N/A" :
-    ["1.56","1.61","1.67","1.74"].slice().reverse().find(i => i === normalOD || i === normalOS);
+  let normalIndex = (normalOD === "N/A" || normalOS === "N/A") ? "N/A" :
+  ["1.56","1.61","1.67","1.74"]
+    .slice()
+    .reverse()
+    .find(i => i === normalOD || i === normalOS);
 
-  const customIndex = (customOD === "N/A" || customOS === "N/A") ? "N/A" :
-    ["1.56","1.61","1.67","1.74"].slice().reverse().find(i => i === customOD || i === customOS);
+// Half / Rimless frame:
+// automatically upgrade 1.56 → 1.61
+if (selectedFrameType === "HalfRimless" && normalIndex === "1.56") {
+  normalIndex = "1.61";
+}
+
+let customIndex = (customOD === "N/A" || customOS === "N/A") ? "N/A" :
+  ["1.56","1.61","1.67","1.74"]
+    .slice()
+    .reverse()
+    .find(i => i === customOD || i === customOS);
+
+
+// Half / Rimless frame:
+// automatically upgrade 1.56 → 1.61
+if (selectedFrameType === "HalfRimless" && customIndex === "1.56") {
+  customIndex = "1.61";
+}
 
 const mcOD = calcMyopiaIndex(sphOD, cylOD);
 const mcOS = calcMyopiaIndex(sphOS, cylOS);
 
-const myopiaIndex =
+let myopiaIndex =
   (mcOD === "UNAVAILABLE" || mcOS === "UNAVAILABLE")
     ? "UNAVAILABLE"
     : ["1.56","1.61","1.67","1.74"]
         .slice()
         .reverse()
         .find(i => i === mcOD || i === mcOS);
+
+
+// Half / Rimless frame:
+// automatically upgrade 1.56 → 1.61
+if (selectedFrameType === "HalfRimless" && myopiaIndex === "1.56") {
+  myopiaIndex = "1.61";
+}
+
+
   document.getElementById("indexResult").innerHTML = customIndex || "—";
 focusLens(customIndex); 
 
@@ -3072,6 +3208,26 @@ showOfficeLens(customIndex);
 document.getElementById("addPower").addEventListener("change", updateRecommendation);
 document.getElementById("addPower").addEventListener("change", toggleMFVisibility);
 
+
+let selectedFrameType = "Full";
+
+document.getElementById("fullFrameBtn").addEventListener("click", () => {
+  selectedFrameType = "Full";
+
+  document.getElementById("fullFrameBtn").classList.add("active");
+  document.getElementById("halfRimlessBtn").classList.remove("active");
+
+  updateRecommendation();
+});
+
+document.getElementById("halfRimlessBtn").addEventListener("click", () => {
+  selectedFrameType = "HalfRimless";
+
+  document.getElementById("halfRimlessBtn").classList.add("active");
+  document.getElementById("fullFrameBtn").classList.remove("active");
+
+  updateRecommendation();
+});
 
 
 
