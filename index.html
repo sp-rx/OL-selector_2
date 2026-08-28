@@ -470,11 +470,11 @@ button[style*="background-color:#191919"] {
   top: 0; left: 0;
   width: 100%; height: 100%;
   background: var(--forest-1);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(1px);
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 99;
   cursor: pointer;
 }
 
@@ -484,6 +484,8 @@ button[style*="background-color:#191919"] {
   border-radius: 10px;
   box-shadow: 0 24px 80px rgba(0,0,0,0.5);
   transition: transform 0.3s ease;
+  z-index: 99;
+
 }
 
 /* ── DIVIDER ── */
@@ -615,7 +617,13 @@ th {
 <body>
 <div style="height: 750px"></div>
 
+
+
+
 <div class="wrap">
+
+
+
 
 <div class="section">
   <!-- HEADER -->
@@ -2799,9 +2807,887 @@ function toggleMFVisibility() {
 }
 </script>
 
+
+
+
+
+
+
+
+
+
+
+<!-- FLOATING CALCULATOR -->
+
+<div id="floatingCalculator" class="floating-calculator minimized small">
+
+  <div class="calculator-header" id="calculatorHeader">
+    <span>Calculator</span>
+
+    <div class="calculator-controls">
+      <button style="display:none" type="button" id="resizeCalc" title="Change size">□</button>
+      <button type="button" id="minimizeCalc" title="Minimize">−</button>
+    </div>
+  </div>
+
+  <div class="calculator-body">
+
+    <div class="calculator-display">
+      <div id="calcExpression"></div>
+      <div id="calcDisplay">0</div>
+    </div>
+
+    <div class="calculator-buttons">
+
+      <button type="button" class="calc-clear" onclick="calculatorClear()">AC</button>
+      <button type="button" onclick="calculatorBackspace()">⌫</button>
+      <button type="button" onclick="calculatorPercent()">%</button>
+      <button type="button" class="calc-operator" onclick="calculatorOperator('/')">÷</button>
+
+      <button type="button" onclick="calculatorNumber('7')">7</button>
+      <button type="button" onclick="calculatorNumber('8')">8</button>
+      <button type="button" onclick="calculatorNumber('9')">9</button>
+      <button type="button" class="calc-operator" onclick="calculatorOperator('*')">×</button>
+
+      <button type="button" onclick="calculatorNumber('4')">4</button>
+      <button type="button" onclick="calculatorNumber('5')">5</button>
+      <button type="button" onclick="calculatorNumber('6')">6</button>
+      <button type="button" class="calc-operator" onclick="calculatorOperator('-')">−</button>
+
+      <button type="button" onclick="calculatorNumber('1')">1</button>
+      <button type="button" onclick="calculatorNumber('2')">2</button>
+      <button type="button" onclick="calculatorNumber('3')">3</button>
+      <button type="button" class="calc-operator" onclick="calculatorOperator('+')">+</button>
+
+      <button type="button" class="calc-zero" onclick="calculatorNumber('0')">0</button>
+      <button type="button" onclick="calculatorNumber('.')">.</button>
+      <button type="button" class="calc-equals" onclick="calculatorEquals()">=</button>
+
+    </div>
+  </div>
+</div>
+
+
+<style>
+
+.floating-calculator {
+  position: fixed;
+  right: 25px; top: 25px;
+  width: 300px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  z-index: 9999;
+  font-family: var(--font-body);
+  color: var(--ink);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+
+/* HEADER */
+
+.calculator-header {
+  height: 48px;
+  padding: 0 12px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--forest);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: move;
+  touch-action: none;
+}
+
+.calculator-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.calculator-controls button {
+  width: 30px; height: 30px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: #fff;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.calculator-controls button:hover {
+  background: transparent;
+}
+
+
+/* DISPLAY */
+
+.calculator-display {
+  min-height: 75px;
+  padding: 18px 16px 14px;
+  box-sizing: border-box;
+  background: var(--paper);
+  text-align: right;
+}
+
+#calcExpression {
+  height: 20px;
+  overflow: hidden;
+  color: var(--forest-d);
+  font-size: 13px;
+}
+
+#calcDisplay {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ink);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+
+/* BUTTONS */
+
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  padding: 10px;
+  background: var(--paper);
+}
+
+.calculator-buttons button {
+  height: 55px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.calculator-buttons button:hover {
+  background: var(--forest-l);
+}
+
+.calculator-buttons button:active {
+  transform: scale(0.95);
+}
+
+
+/* OPERATORS */
+
+.calculator-buttons .calc-operator {
+  background: #8B0000;
+  color: #fff;
+  border-color: #8B0000;
+  font-weight: 600;
+}
+
+
+/* CLEAR */
+
+.calculator-buttons .calc-clear {
+  background: var(--forest-l);
+  color: var(--gold);
+  border-color: var(--line);
+  font-weight: 600;
+}
+
+
+/* EQUALS */
+
+.calculator-buttons .calc-equals {
+  background: var(--gold);
+  color: #fff;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+
+/* ZERO */
+
+.calculator-buttons .calc-zero {
+  grid-column: span 2;
+}
+
+
+/* SMALL SIZE */
+
+.floating-calculator.small {
+  width: 240px;
+}
+
+.floating-calculator.small .calculator-header {
+  height: 42px;
+}
+
+.floating-calculator.small .calculator-display {
+  min-height: 65px;
+  padding: 12px;
+}
+
+.floating-calculator.small #calcDisplay {
+  font-size: 26px;
+}
+
+.floating-calculator.small .calculator-buttons {
+  gap: 5px;
+  padding: 7px;
+}
+
+.floating-calculator.small .calculator-buttons button {
+  height: 44px;
+  border-radius: var(--radius-s);
+  font-size: 17px;
+}
+
+
+/* MINIMIZED */
+
+.floating-calculator.minimized {
+  width: 190px;
+  height: 48px;
+  border-radius: var(--radius);
+}
+
+.floating-calculator.minimized .calculator-body {
+  display: none;
+}
+
+.floating-calculator.minimized .calculator-header {
+  border-radius: var(--radius);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .floating-calculator {
+    width: 280px;
+    left: 12px !important;
+    top: 12px !important;
+  }
+
+  .floating-calculator.small {
+    width: 230px;
+  }
+}
+
+</style>
+
+
+<script>
+
+/* =========================
+   CALCULATOR
+========================= */
+
+let calcCurrent = "0";
+let calcPrevious = null;
+let calcOperator = null;
+let calcWaitingForNumber = false;
+let calcExpression = "";
+
+
+/* =========================
+   DISPLAY
+========================= */
+
+function updateCalculatorDisplay() {
+
+  document.getElementById("calcDisplay").textContent =
+    calcCurrent;
+
+  document.getElementById("calcExpression").textContent =
+    calcExpression;
+}
+
+
+/* =========================
+   NUMBERS
+========================= */
+
+function calculatorNumber(number) {
+
+  if (calcCurrent === "Error")
+    calculatorClear();
+
+  if (calcWaitingForNumber) {
+
+    calcCurrent = number;
+    calcWaitingForNumber = false;
+
+  } else {
+
+    if (
+      number === "." &&
+      calcCurrent.includes(".")
+    )
+      return;
+
+    if (
+      calcCurrent === "0" &&
+      number !== "."
+    ) {
+      calcCurrent = number;
+    } else {
+      calcCurrent += number;
+    }
+  }
+
+  updateCalculatorDisplay();
+}
+
+
+/* =========================
+   OPERATORS
+========================= */
+
+function calculatorOperator(operator) {
+
+  const currentValue =
+    parseFloat(calcCurrent);
+
+  if (isNaN(currentValue))
+    return;
+
+
+  if (
+    calcPrevious !== null &&
+    calcOperator &&
+    !calcWaitingForNumber
+  ) {
+    calculateResult();
+  }
+
+
+  calcPrevious =
+    parseFloat(calcCurrent);
+
+  calcOperator = operator;
+  calcWaitingForNumber = true;
+
+
+  let displayOperator = operator;
+
+  if (operator === "*")
+    displayOperator = "×";
+
+  if (operator === "/")
+    displayOperator = "÷";
+
+
+  calcExpression =
+    calcPrevious +
+    " " +
+    displayOperator;
+
+
+  updateCalculatorDisplay();
+}
+
+
+/* =========================
+   CALCULATE
+========================= */
+
+function calculateResult() {
+
+  const previous =
+    parseFloat(calcPrevious);
+
+  const current =
+    parseFloat(calcCurrent);
+
+  let result;
+
+
+  switch (calcOperator) {
+
+    case "+":
+      result = previous + current;
+      break;
+
+    case "-":
+      result = previous - current;
+      break;
+
+    case "*":
+      result = previous * current;
+      break;
+
+    case "/":
+
+      if (current === 0) {
+
+        calcCurrent = "Error";
+        calcPrevious = null;
+        calcOperator = null;
+        calcExpression = "";
+
+        updateCalculatorDisplay();
+
+        return;
+      }
+
+      result = previous / current;
+      break;
+  }
+
+
+  result =
+    Math.round(
+      (result + Number.EPSILON) *
+      100000000
+    ) / 100000000;
+
+
+  let displayOperator =
+    calcOperator;
+
+  if (displayOperator === "*")
+    displayOperator = "×";
+
+  if (displayOperator === "/")
+    displayOperator = "÷";
+
+
+  /* SHOW WORKING */
+
+  calcExpression =
+    previous +
+    " " +
+    displayOperator +
+    " " +
+    current;
+
+
+  calcCurrent =
+    String(result);
+
+  calcPrevious = null;
+  calcOperator = null;
+  calcWaitingForNumber = true;
+
+  updateCalculatorDisplay();
+}
+
+
+/* =========================
+   EQUALS
+========================= */
+
+function calculatorEquals() {
+
+  if (
+    calcPrevious === null ||
+    calcOperator === null
+  )
+    return;
+
+  calculateResult();
+}
+
+
+/* =========================
+   CLEAR
+========================= */
+
+function calculatorClear() {
+
+  calcCurrent = "0";
+  calcPrevious = null;
+  calcOperator = null;
+  calcWaitingForNumber = false;
+  calcExpression = "";
+
+  updateCalculatorDisplay();
+}
+
+
+/* =========================
+   BACKSPACE
+========================= */
+
+function calculatorBackspace() {
+
+  if (calcWaitingForNumber)
+    return;
+
+  if (
+    calcCurrent.length <= 1 ||
+    calcCurrent === "Error"
+  ) {
+
+    calcCurrent = "0";
+
+  } else {
+
+    calcCurrent =
+      calcCurrent.slice(0, -1);
+  }
+
+  updateCalculatorDisplay();
+}
+
+
+/* =========================
+   PERCENT
+========================= */
+
+function calculatorPercent() {
+
+  const current = parseFloat(calcCurrent);
+
+  if (isNaN(current)) return;
+
+
+  /* No operator */
+
+  if (calcPrevious === null || calcOperator === null) {
+    calcCurrent = String(current / 100);
+    calcExpression = current + "%";
+    updateCalculatorDisplay();
+    return;
+  }
+
+
+  const previous = parseFloat(calcPrevious);
+  const percent = previous * current / 100;
+
+  let result;
+
+
+  switch (calcOperator) {
+
+    case "+":
+      result = previous + percent;
+      break;
+
+    case "-":
+      result = previous - percent;
+      break;
+
+    case "*":
+      result = previous * percent;
+      break;
+
+    case "/":
+      if (percent === 0) {
+        calcCurrent = "Error";
+        calcPrevious = null;
+        calcOperator = null;
+        calcExpression = "";
+        updateCalculatorDisplay();
+        return;
+      }
+
+      result = previous / percent;
+      break;
+  }
+
+
+  /* Remove floating-point errors */
+
+  result =
+    Math.round(
+      (result + Number.EPSILON) * 100000000
+    ) / 100000000;
+
+
+  /* Show the working */
+
+  let op = calcOperator;
+
+  if (op === "*") op = "×";
+  if (op === "/") op = "÷";
+
+  calcExpression =
+    previous + " " + op + " " + current + "%";
+
+
+  /* Show final answer */
+
+  calcCurrent = String(result);
+
+  calcPrevious = null;
+  calcOperator = null;
+  calcWaitingForNumber = true;
+
+  updateCalculatorDisplay();
+}
+
+
+/* =========================
+   SIZE TOGGLE
+========================= */
+
+const calculator =
+  document.getElementById(
+    "floatingCalculator"
+  );
+
+const resizeButton =
+  document.getElementById(
+    "resizeCalc"
+  );
+
+
+resizeButton.addEventListener(
+  "click",
+  function(e) {
+
+    e.stopPropagation();
+
+    if (
+      calculator.classList.contains(
+        "minimized"
+      )
+    )
+      return;
+
+    calculator.classList.toggle("small");
+
+    this.textContent =
+      calculator.classList.contains("small")
+        ? "□"
+        : "▪";
+  }
+);
+
+
+/* =========================
+   MINIMIZE
+========================= */
+
+document
+  .getElementById("minimizeCalc")
+  .addEventListener(
+    "click",
+    function(e) {
+
+      e.stopPropagation();
+
+      calculator.classList.toggle(
+        "minimized"
+      );
+    }
+  );
+
+
+/* =========================
+   DRAG
+========================= */
+
+const calculatorHeader =
+  document.getElementById(
+    "calculatorHeader"
+  );
+
+let isDragging = false;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+
+
+calculatorHeader.addEventListener(
+  "pointerdown",
+  function(e) {
+
+    if (
+      e.target.closest(
+        ".calculator-controls"
+      )
+    )
+      return;
+
+
+    const rect =
+      calculator.getBoundingClientRect();
+
+
+    dragOffsetX =
+      e.clientX - rect.left;
+
+    dragOffsetY =
+      e.clientY - rect.top;
+
+
+    /* Lock current position */
+
+    calculator.style.left =
+      rect.left + "px";
+
+    calculator.style.top =
+      rect.top + "px";
+
+    calculator.style.right = "auto";
+    calculator.style.bottom = "auto";
+
+
+    isDragging = true;
+
+
+    /* Prevent page text selection */
+
+    document.body.style.userSelect =
+      "none";
+
+    document.body.style.webkitUserSelect =
+      "none";
+
+
+    calculatorHeader.setPointerCapture(
+      e.pointerId
+    );
+
+    e.preventDefault();
+  }
+);
+
+
+calculatorHeader.addEventListener(
+  "pointermove",
+  function(e) {
+
+    if (!isDragging)
+      return;
+
+
+    calculator.style.left =
+      (e.clientX - dragOffsetX) +
+      "px";
+
+    calculator.style.top =
+      (e.clientY - dragOffsetY) +
+      "px";
+  }
+);
+
+
+calculatorHeader.addEventListener(
+  "pointerup",
+  function(e) {
+
+    isDragging = false;
+
+    document.body.style.userSelect =
+      "";
+
+    document.body.style.webkitUserSelect =
+      "";
+
+
+    calculatorHeader.releasePointerCapture(
+      e.pointerId
+    );
+  }
+);
+
+
+calculatorHeader.addEventListener(
+  "pointercancel",
+  function() {
+
+    isDragging = false;
+
+    document.body.style.userSelect =
+      "";
+
+    document.body.style.webkitUserSelect =
+      "";
+  }
+);
+
+
+/* =========================
+   KEYBOARD
+========================= */
+
+document.addEventListener(
+  "keydown",
+  function(e) {
+
+    if (
+      document.activeElement.tagName ===
+        "INPUT" ||
+      document.activeElement.tagName ===
+        "TEXTAREA"
+    )
+      return;
+
+
+    if (
+      (e.key >= "0" && e.key <= "9") ||
+      e.key === "."
+    ) {
+
+      calculatorNumber(e.key);
+      e.preventDefault();
+      return;
+    }
+
+
+    if (
+      ["+", "-", "*", "/"].includes(e.key)
+    ) {
+
+      calculatorOperator(e.key);
+      e.preventDefault();
+      return;
+    }
+
+
+    if (
+      e.key === "Enter" ||
+      e.key === "="
+    ) {
+
+      calculatorEquals();
+      e.preventDefault();
+      return;
+    }
+
+
+    if (e.key === "Backspace") {
+
+      calculatorBackspace();
+      e.preventDefault();
+      return;
+    }
+
+
+    if (e.key === "Escape") {
+
+      calculatorClear();
+      e.preventDefault();
+    }
+  }
+);
+
+
+/* INITIALIZE */
+
+updateCalculatorDisplay();
+
+</script>
+
+
+
+
+
+
 </div><!-- /wrap -->
 
 <div style="height:80px"></div>
+
+
 
 <!-- LIGHTBOX -->
 <div id="lightboxOverlay" onclick="closeLightbox()">
@@ -3348,9 +4234,19 @@ window.addEventListener('DOMContentLoaded',()=>{
 function openLightbox(src) {
   const overlay = document.getElementById('lightboxOverlay');
   const img = document.getElementById('lightboxImg');
+  const calculator = document.getElementById('floatingCalculator');
+
   img.src = src;
   overlay.style.display = 'flex';
+
+  /* Move calculator to the top document level */
+  if (calculator && calculator.parentElement !== document.body) {
+    document.body.appendChild(calculator);
+  }
+
+  calculator.style.zIndex = '2147483647';
 }
+
 function closeLightbox() {
   document.getElementById('lightboxOverlay').style.display = 'none';
 }
@@ -3526,9 +4422,6 @@ function stepSph(id, step){
   el.dispatchEvent(new Event('change', { bubbles: true }));
 }
 </script>
-
-
-
 
 
 
