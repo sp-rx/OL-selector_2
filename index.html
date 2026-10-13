@@ -2817,62 +2817,101 @@ function toggleMFVisibility() {
 
 
 
-<!-- FLOATING CALCULATOR -->
+<!-- FLOATING FRAME & LENS DISCOUNT CALCULATOR -->
 
 <div id="floatingCalculator" class="floating-calculator minimized small">
 
   <div class="calculator-header" id="calculatorHeader">
-    <span>Calculator</span>
-
+    <span>Frame & Lens Calculator</span>
     <div class="calculator-controls">
-      <button style="display:none" type="button" id="resizeCalc" title="Change size">□</button>
       <button type="button" id="minimizeCalc" title="Minimize">−</button>
     </div>
   </div>
 
   <div class="calculator-body">
 
-    <div class="calculator-display">
-      <div id="calcExpression"></div>
-      <div id="calcDisplay">0</div>
+    <!-- FRAME -->
+    <div class="discount-row">
+      <label for="framePrice">Frame Price (RM)</label>
+      <input type="number" id="framePrice" min="0" step="0.01"
+             placeholder="0.00">
+      <div class="discount-buttons">
+        <button type="button" id="frame10" onclick="applyDiscount('frame',10)">10%</button>
+        <button type="button" id="frame20" onclick="applyDiscount('frame',20)">20%</button>
+      </div>
+      <div class="discount-result">
+        <span>Frame Final Price</span>
+        <strong id="frameFinal">RM 0.00</strong>
+      </div>
     </div>
 
-    <div class="calculator-buttons">
-
-      <button type="button" class="calc-clear" onclick="calculatorClear()">AC</button>
-      <button type="button" onclick="calculatorBackspace()">⌫</button>
-      <button type="button" onclick="calculatorPercent()">%</button>
-      <button type="button" class="calc-operator" onclick="calculatorOperator('/')">÷</button>
-
-      <button type="button" onclick="calculatorNumber('7')">7</button>
-      <button type="button" onclick="calculatorNumber('8')">8</button>
-      <button type="button" onclick="calculatorNumber('9')">9</button>
-      <button type="button" class="calc-operator" onclick="calculatorOperator('*')">×</button>
-
-      <button type="button" onclick="calculatorNumber('4')">4</button>
-      <button type="button" onclick="calculatorNumber('5')">5</button>
-      <button type="button" onclick="calculatorNumber('6')">6</button>
-      <button type="button" class="calc-operator" onclick="calculatorOperator('-')">−</button>
-
-      <button type="button" onclick="calculatorNumber('1')">1</button>
-      <button type="button" onclick="calculatorNumber('2')">2</button>
-      <button type="button" onclick="calculatorNumber('3')">3</button>
-      <button type="button" class="calc-operator" onclick="calculatorOperator('+')">+</button>
-
-      <button type="button" class="calc-zero" onclick="calculatorNumber('0')">0</button>
-      <button type="button" onclick="calculatorNumber('.')">.</button>
-      <button type="button" class="calc-equals" onclick="calculatorEquals()">=</button>
-
+    <!-- LENS -->
+    <div class="discount-row">
+      <label for="lensPrice">Lens Price (RM)</label>
+      <input type="number" id="lensPrice" min="0" step="0.01"
+             placeholder="0.00">
+      <div class="discount-buttons">
+        <button type="button" id="lens10" onclick="applyDiscount('lens',10)">10%</button>
+        <button type="button" id="lens20" onclick="applyDiscount('lens',20)">20%</button>
+      </div>
+      <div class="discount-result">
+        <span>Lens Final Price</span>
+        <strong id="lensFinal">RM 0.00</strong>
+      </div>
     </div>
+
+<!-- BEFORE & AFTER TOTAL -->
+<div class="discount-total">
+  <span>Gross Total</span>
+  <strong id="beforeTotal">RM 0.00</strong>
+</div>
+
+<div class="discount-savings">
+  You Save
+  <strong id="discountSavings">RM 0.00</strong>
+</div>
+
+<div class="discount-total after-total">
+  <span>Net Total</span>
+  <strong id="discountTotal">RM 0.00</strong>
+</div>
+
+
+
   </div>
 </div>
 
 
 <style>
 
+.discount-total.after-total {
+  border-top: 1px solid var(--line);
+  margin-top: 2px;
+  padding-top: 6px;
+}
+
+.discount-total.after-total strong {
+  color: var(--forest);
+  font-size: 22px;
+}
+
+.discount-savings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 2px 4px;
+  color: var(--forest-d);
+  font-size: 12px;
+}
+
+.discount-savings strong {
+  color: var(--forest);
+  font-size: 15px;
+}
 .floating-calculator {
   position: fixed;
-  right: 25px; top: 25px;
+  right: 25px;
+  top: 25px;
   width: 300px;
   background: var(--paper);
   border: 1px solid var(--line);
@@ -2885,9 +2924,6 @@ function toggleMFVisibility() {
   user-select: none;
   -webkit-user-select: none;
 }
-
-
-/* HEADER */
 
 .calculator-header {
   height: 48px;
@@ -2903,13 +2939,9 @@ function toggleMFVisibility() {
   touch-action: none;
 }
 
-.calculator-controls {
-  display: flex;
-  gap: 4px;
-}
-
 .calculator-controls button {
-  width: 30px; height: 30px;
+  width: 30px;
+  height: 30px;
   border: 0;
   border-radius: var(--radius-s);
   background: transparent;
@@ -2918,136 +2950,106 @@ function toggleMFVisibility() {
   cursor: pointer;
 }
 
-.calculator-controls button:hover {
-  background: transparent;
-}
-
-
-/* DISPLAY */
-
-.calculator-display {
-  min-height: 75px;
-  padding: 18px 16px 14px;
-  box-sizing: border-box;
-  background: var(--paper);
-  text-align: right;
-}
-
-#calcExpression {
-  height: 20px;
-  overflow: hidden;
-  color: var(--forest-d);
-  font-size: 13px;
-}
-
-#calcDisplay {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--ink);
-  font-size: 32px;
-  font-weight: 500;
-}
-
-
-/* BUTTONS */
-
-.calculator-buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
+.calculator-body {
   padding: 10px;
   background: var(--paper);
 }
 
-.calculator-buttons button {
-  height: 55px;
+.discount-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.discount-row label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.discount-row input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 38px;
+  padding: 0 10px;
   border: 1px solid var(--line);
   border-radius: var(--radius-s);
   background: var(--cream);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 20px;
+  font-size: 16px;
+  outline-color: var(--forest);
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.discount-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.discount-buttons button {
+  height: 36px;
+  border: 1px solid var(--forest);
+  border-radius: var(--radius-s);
+  background: var(--forest);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: 0.15s;
 }
 
-.calculator-buttons button:hover {
-  background: var(--forest-l);
+.discount-buttons button:hover:not(:disabled) {
+  background: var(--forest-d);
 }
 
-.calculator-buttons button:active {
-  transform: scale(0.95);
-}
-
-
-/* OPERATORS */
-
-.calculator-buttons .calc-operator {
-  background: #8B0000;
-  color: #fff;
-  border-color: #8B0000;
-  font-weight: 600;
-}
-
-
-/* CLEAR */
-
-.calculator-buttons .calc-clear {
-  background: var(--forest-l);
-  color: var(--gold);
-  border-color: var(--line);
-  font-weight: 600;
-}
-
-
-/* EQUALS */
-
-.calculator-buttons .calc-equals {
+.discount-buttons button.active {
   background: var(--gold);
-  color: #fff;
   border-color: var(--gold);
+  color: #fff;
+}
+
+.discount-buttons button:disabled {
+  background: var(--cream);
+  color: #aaa;
+  border-color: var(--line);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.discount-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--forest-d);
+}
+
+.discount-result strong {
+  color: var(--ink);
+  font-size: 16px;
   font-weight: 600;
 }
 
-
-/* ZERO */
-
-.calculator-buttons .calc-zero {
-  grid-column: span 2;
+.discount-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 2px 6px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
-
-/* SMALL SIZE */
-
-.floating-calculator.small {
-  width: 240px;
+.discount-total strong {
+  color: var(--forest);
+  font-size: 22px;
 }
-
-.floating-calculator.small .calculator-header {
-  height: 42px;
-}
-
-.floating-calculator.small .calculator-display {
-  min-height: 65px;
-  padding: 12px;
-}
-
-.floating-calculator.small #calcDisplay {
-  font-size: 26px;
-}
-
-.floating-calculator.small .calculator-buttons {
-  gap: 5px;
-  padding: 7px;
-}
-
-.floating-calculator.small .calculator-buttons button {
-  height: 44px;
-  border-radius: var(--radius-s);
-  font-size: 17px;
-}
-
 
 /* MINIMIZED */
 
@@ -3065,421 +3067,242 @@ function toggleMFVisibility() {
   border-radius: var(--radius);
 }
 
+/* SMALL SIZE */
 
-/* MOBILE */
+.floating-calculator.small {
+  width: 250px;
+}
 
-@media (max-width: 600px) {
-  .floating-calculator {
-    width: 280px;
-    left: 12px !important;
-    top: 12px !important;
-  }
+.floating-calculator.small .calculator-header {
+  height: 42px;
+}
 
-  .floating-calculator.small {
-    width: 230px;
-  }
+
+
+
+
+/* COMPACT FONT & SPACING */
+.floating-calculator {
+  font-size: 10px;
+}
+
+.calculator-header {
+  height: 34px;
+  padding: 0 10px;
+  font-size: 10px;
+}
+
+.calculator-controls button {
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+}
+
+.calculator-body {
+  padding: 15px;
+}
+
+.discount-row {
+  padding: 6px 0;
+}
+
+.discount-row label {
+  margin-bottom: 3px;
+  font-size: 10px;
+}
+
+.discount-row input {
+  height: 28px;
+  padding: 0 7px;
+  font-size: 12px;
+}
+
+.discount-buttons {
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.discount-buttons button {
+  height: 27px;
+  font-size: 10px;
+}
+
+.discount-result {
+  margin-top: 6px;
+  gap: 5px;
+  font-size: 10px;
+}
+
+.discount-result strong {
+  font-size: 12px;
+}
+
+.discount-total {
+  padding: 8px 2px 3px;
+  font-size: 10px;
+}
+
+.discount-total strong {
+  font-size: 15px;
+}
+
+.discount-total.after-total {
+  margin-top: 2px;
+  padding-top: 5px;
+}
+
+.discount-total.after-total strong {
+  font-size: 15px;
+}
+
+.discount-savings {
+  padding: 5px 2px 2px;
+  font-size: 10px;
+}
+
+.discount-savings strong {
+  font-size: 12px;
+}
+
+.floating-calculator.small .calculator-header {
+  height: 44px;
+}
+
+.floating-calculator.minimized {
+  height: 44px;
 }
 
 </style>
 
 
 <script>
-
 /* =========================
-   CALCULATOR
+   DISCOUNT CALCULATOR
 ========================= */
 
-let calcCurrent = "0";
-let calcPrevious = null;
-let calcOperator = null;
-let calcWaitingForNumber = false;
-let calcExpression = "";
+const discountCalc = {
+  frame: { price: 0, discount: 0 },
+  lens:  { price: 0, discount: 0 }
+};
 
 
-/* =========================
-   DISPLAY
-========================= */
-
-function updateCalculatorDisplay() {
-
-  document.getElementById("calcDisplay").textContent =
-    calcCurrent;
-
-  document.getElementById("calcExpression").textContent =
-    calcExpression;
+function money(value) {
+  return value.toLocaleString('en-MY', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 }
 
 
-/* =========================
-   NUMBERS
-========================= */
 
-function calculatorNumber(number) {
+function getFrameDiscount(price) {
+  if (price < 300) return 0;
+  if (price < 400) return 10;
+  return 20;
+}
 
-  if (calcCurrent === "Error")
-    calculatorClear();
-
-  if (calcWaitingForNumber) {
-
-    calcCurrent = number;
-    calcWaitingForNumber = false;
-
-  } else {
-
-    if (
-      number === "." &&
-      calcCurrent.includes(".")
-    )
-      return;
-
-    if (
-      calcCurrent === "0" &&
-      number !== "."
-    ) {
-      calcCurrent = number;
-    } else {
-      calcCurrent += number;
-    }
-  }
-
-  updateCalculatorDisplay();
+function getLensDiscount(price) {
+  if (price < 450) return 10;
+  return 20;
 }
 
 
-/* =========================
-   OPERATORS
-========================= */
+function applyDiscount(type, percentage) {
+  const item = discountCalc[type];
+  const allowed = getAllowedDiscount(item.price);
 
-function calculatorOperator(operator) {
+  if (percentage !== allowed) return;
 
-  const currentValue =
-    parseFloat(calcCurrent);
-
-  if (isNaN(currentValue))
-    return;
-
-
-  if (
-    calcPrevious !== null &&
-    calcOperator &&
-    !calcWaitingForNumber
-  ) {
-    calculateResult();
-  }
-
-
-  calcPrevious =
-    parseFloat(calcCurrent);
-
-  calcOperator = operator;
-  calcWaitingForNumber = true;
-
-
-  let displayOperator = operator;
-
-  if (operator === "*")
-    displayOperator = "×";
-
-  if (operator === "/")
-    displayOperator = "÷";
-
-
-  calcExpression =
-    calcPrevious +
-    " " +
-    displayOperator;
-
-
-  updateCalculatorDisplay();
+  item.discount = percentage;
+  updateDiscountCalculator();
 }
 
 
-/* =========================
-   CALCULATE
-========================= */
+function updateDiscountCalculator() {
+  ['frame', 'lens'].forEach(type => {
+    const item = discountCalc[type];
+const allowed = type === 'frame'
+  ? getFrameDiscount(item.price)
+  : getLensDiscount(item.price);
+    // Automatically apply the eligible discount.
+    item.discount = allowed;
 
-function calculateResult() {
+    // Highlight the eligible discount button.
+    [10, 20].forEach(percentage => {
+      const button = document.getElementById(
+        type + percentage
+      );
 
-  const previous =
-    parseFloat(calcPrevious);
+      button.disabled = percentage !== allowed;
+      button.classList.toggle(
+        'active',
+        percentage === allowed
+      );
+    });
 
-  const current =
-    parseFloat(calcCurrent);
+    // Calculate final price.
+    const finalPrice =
+      item.price * (1 - item.discount / 100);
 
-  let result;
+    document.getElementById(type + 'Final').textContent =
+      money(finalPrice);
+  });
 
+  const frameOriginal = discountCalc.frame.price;
+  const lensOriginal = discountCalc.lens.price;
 
-  switch (calcOperator) {
+  const frameFinal =
+    frameOriginal * (1 - discountCalc.frame.discount / 100);
 
-    case "+":
-      result = previous + current;
-      break;
+  const lensFinal =
+    lensOriginal * (1 - discountCalc.lens.discount / 100);
 
-    case "-":
-      result = previous - current;
-      break;
+  const beforeTotal = frameOriginal + lensOriginal;
+  const afterTotal = frameFinal + lensFinal;
+  const savings = beforeTotal - afterTotal;
 
-    case "*":
-      result = previous * current;
-      break;
+  document.getElementById('beforeTotal').textContent =
+    money(beforeTotal);
 
-    case "/":
+  document.getElementById('discountTotal').textContent =
+    money(afterTotal);
 
-      if (current === 0) {
-
-        calcCurrent = "Error";
-        calcPrevious = null;
-        calcOperator = null;
-        calcExpression = "";
-
-        updateCalculatorDisplay();
-
-        return;
-      }
-
-      result = previous / current;
-      break;
-  }
-
-
-  result =
-    Math.round(
-      (result + Number.EPSILON) *
-      100000000
-    ) / 100000000;
-
-
-  let displayOperator =
-    calcOperator;
-
-  if (displayOperator === "*")
-    displayOperator = "×";
-
-  if (displayOperator === "/")
-    displayOperator = "÷";
-
-
-  /* SHOW WORKING */
-
-  calcExpression =
-    previous +
-    " " +
-    displayOperator +
-    " " +
-    current;
-
-
-  calcCurrent =
-    String(result);
-
-  calcPrevious = null;
-  calcOperator = null;
-  calcWaitingForNumber = true;
-
-  updateCalculatorDisplay();
+  document.getElementById('discountSavings').textContent =
+    money(savings);
 }
 
 
-/* =========================
-   EQUALS
-========================= */
+// Update prices when the user types.
+['frame', 'lens'].forEach(type => {
+  document.getElementById(type + 'Price')
+    .addEventListener('input', function() {
+      const value = parseFloat(this.value);
 
-function calculatorEquals() {
+      discountCalc[type].price =
+        this.value.trim() === '' || !Number.isFinite(value)
+          ? 0
+          : Math.max(0, value);
 
-  if (
-    calcPrevious === null ||
-    calcOperator === null
-  )
-    return;
+      // Reset the previous selection when the price changes.
+      discountCalc[type].discount = 0;
 
-  calculateResult();
-}
-
-
-/* =========================
-   CLEAR
-========================= */
-
-function calculatorClear() {
-
-  calcCurrent = "0";
-  calcPrevious = null;
-  calcOperator = null;
-  calcWaitingForNumber = false;
-  calcExpression = "";
-
-  updateCalculatorDisplay();
-}
-
-
-/* =========================
-   BACKSPACE
-========================= */
-
-function calculatorBackspace() {
-
-  if (calcWaitingForNumber)
-    return;
-
-  if (
-    calcCurrent.length <= 1 ||
-    calcCurrent === "Error"
-  ) {
-
-    calcCurrent = "0";
-
-  } else {
-
-    calcCurrent =
-      calcCurrent.slice(0, -1);
-  }
-
-  updateCalculatorDisplay();
-}
-
-
-/* =========================
-   PERCENT
-========================= */
-
-function calculatorPercent() {
-
-  const current = parseFloat(calcCurrent);
-
-  if (isNaN(current)) return;
-
-
-  /* No operator */
-
-  if (calcPrevious === null || calcOperator === null) {
-    calcCurrent = String(current / 100);
-    calcExpression = current + "%";
-    updateCalculatorDisplay();
-    return;
-  }
-
-
-  const previous = parseFloat(calcPrevious);
-  const percent = previous * current / 100;
-
-  let result;
-
-
-  switch (calcOperator) {
-
-    case "+":
-      result = previous + percent;
-      break;
-
-    case "-":
-      result = previous - percent;
-      break;
-
-    case "*":
-      result = previous * percent;
-      break;
-
-    case "/":
-      if (percent === 0) {
-        calcCurrent = "Error";
-        calcPrevious = null;
-        calcOperator = null;
-        calcExpression = "";
-        updateCalculatorDisplay();
-        return;
-      }
-
-      result = previous / percent;
-      break;
-  }
-
-
-  /* Remove floating-point errors */
-
-  result =
-    Math.round(
-      (result + Number.EPSILON) * 100000000
-    ) / 100000000;
-
-
-  /* Show the working */
-
-  let op = calcOperator;
-
-  if (op === "*") op = "×";
-  if (op === "/") op = "÷";
-
-  calcExpression =
-    previous + " " + op + " " + current + "%";
-
-
-  /* Show final answer */
-
-  calcCurrent = String(result);
-
-  calcPrevious = null;
-  calcOperator = null;
-  calcWaitingForNumber = true;
-
-  updateCalculatorDisplay();
-}
-
-
-/* =========================
-   SIZE TOGGLE
-========================= */
-
-const calculator =
-  document.getElementById(
-    "floatingCalculator"
-  );
-
-const resizeButton =
-  document.getElementById(
-    "resizeCalc"
-  );
-
-
-resizeButton.addEventListener(
-  "click",
-  function(e) {
-
-    e.stopPropagation();
-
-    if (
-      calculator.classList.contains(
-        "minimized"
-      )
-    )
-      return;
-
-    calculator.classList.toggle("small");
-
-    this.textContent =
-      calculator.classList.contains("small")
-        ? "□"
-        : "▪";
-  }
-);
+      updateDiscountCalculator();
+    });
+});
 
 
 /* =========================
    MINIMIZE
 ========================= */
 
-document
-  .getElementById("minimizeCalc")
-  .addEventListener(
-    "click",
-    function(e) {
+const calculator =
+  document.getElementById('floatingCalculator');
 
-      e.stopPropagation();
-
-      calculator.classList.toggle(
-        "minimized"
-      );
-    }
-  );
+document.getElementById('minimizeCalc')
+  .addEventListener('click', function(e) {
+    e.stopPropagation();
+    calculator.classList.toggle('minimized');
+  });
 
 
 /* =========================
@@ -3487,197 +3310,51 @@ document
 ========================= */
 
 const calculatorHeader =
-  document.getElementById(
-    "calculatorHeader"
-  );
+  document.getElementById('calculatorHeader');
 
 let isDragging = false;
 let dragOffsetX = 0;
 let dragOffsetY = 0;
 
+calculatorHeader.addEventListener('pointerdown', function(e) {
+  if (e.target.closest('.calculator-controls')) return;
 
-calculatorHeader.addEventListener(
-  "pointerdown",
-  function(e) {
+  const rect = calculator.getBoundingClientRect();
 
-    if (
-      e.target.closest(
-        ".calculator-controls"
-      )
-    )
-      return;
+  dragOffsetX = e.clientX - rect.left;
+  dragOffsetY = e.clientY - rect.top;
 
+  calculator.style.left = rect.left + 'px';
+  calculator.style.top = rect.top + 'px';
+  calculator.style.right = 'auto';
 
-    const rect =
-      calculator.getBoundingClientRect();
+  isDragging = true;
+  calculatorHeader.setPointerCapture(e.pointerId);
+  e.preventDefault();
+});
 
+calculatorHeader.addEventListener('pointermove', function(e) {
+  if (!isDragging) return;
 
-    dragOffsetX =
-      e.clientX - rect.left;
+  calculator.style.left =
+    (e.clientX - dragOffsetX) + 'px';
 
-    dragOffsetY =
-      e.clientY - rect.top;
+  calculator.style.top =
+    (e.clientY - dragOffsetY) + 'px';
+});
 
+function stopDragging() {
+  isDragging = false;
+}
 
-    /* Lock current position */
-
-    calculator.style.left =
-      rect.left + "px";
-
-    calculator.style.top =
-      rect.top + "px";
-
-    calculator.style.right = "auto";
-    calculator.style.bottom = "auto";
-
-
-    isDragging = true;
-
-
-    /* Prevent page text selection */
-
-    document.body.style.userSelect =
-      "none";
-
-    document.body.style.webkitUserSelect =
-      "none";
-
-
-    calculatorHeader.setPointerCapture(
-      e.pointerId
-    );
-
-    e.preventDefault();
-  }
-);
-
-
-calculatorHeader.addEventListener(
-  "pointermove",
-  function(e) {
-
-    if (!isDragging)
-      return;
-
-
-    calculator.style.left =
-      (e.clientX - dragOffsetX) +
-      "px";
-
-    calculator.style.top =
-      (e.clientY - dragOffsetY) +
-      "px";
-  }
-);
-
-
-calculatorHeader.addEventListener(
-  "pointerup",
-  function(e) {
-
-    isDragging = false;
-
-    document.body.style.userSelect =
-      "";
-
-    document.body.style.webkitUserSelect =
-      "";
-
-
-    calculatorHeader.releasePointerCapture(
-      e.pointerId
-    );
-  }
-);
-
-
-calculatorHeader.addEventListener(
-  "pointercancel",
-  function() {
-
-    isDragging = false;
-
-    document.body.style.userSelect =
-      "";
-
-    document.body.style.webkitUserSelect =
-      "";
-  }
-);
-
-
-/* =========================
-   KEYBOARD
-========================= */
-
-document.addEventListener(
-  "keydown",
-  function(e) {
-
-    if (
-      document.activeElement.tagName ===
-        "INPUT" ||
-      document.activeElement.tagName ===
-        "TEXTAREA"
-    )
-      return;
-
-
-    if (
-      (e.key >= "0" && e.key <= "9") ||
-      e.key === "."
-    ) {
-
-      calculatorNumber(e.key);
-      e.preventDefault();
-      return;
-    }
-
-
-    if (
-      ["+", "-", "*", "/"].includes(e.key)
-    ) {
-
-      calculatorOperator(e.key);
-      e.preventDefault();
-      return;
-    }
-
-
-    if (
-      e.key === "Enter" ||
-      e.key === "="
-    ) {
-
-      calculatorEquals();
-      e.preventDefault();
-      return;
-    }
-
-
-    if (e.key === "Backspace") {
-
-      calculatorBackspace();
-      e.preventDefault();
-      return;
-    }
-
-
-    if (e.key === "Escape") {
-
-      calculatorClear();
-      e.preventDefault();
-    }
-  }
-);
+calculatorHeader.addEventListener('pointerup', stopDragging);
+calculatorHeader.addEventListener('pointercancel', stopDragging);
 
 
 /* INITIALIZE */
 
-updateCalculatorDisplay();
-
+updateDiscountCalculator();
 </script>
-
 
 
 
