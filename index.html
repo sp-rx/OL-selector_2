@@ -680,7 +680,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
 
 
-  <div class="section">
+  <div style="display:none" class="section">
 
 <button style="height:25px;  padding:5px 15px" class="normal" onclick="toggleHideShow('SearchLens')">Toggle Search Lens</button> 
 
@@ -2633,16 +2633,33 @@ halfRimlessBtn.addEventListener("click", function () {
 
   </div><!-- /section index recommender -->
 
+
 <div class="section">
 
-      <h1 class="header-title">September to December 2026 Promo  
-	<em><span style="font-size:22px">
-	<br>All Lenses 10% discount.
-	
-</em></span>
-</h1>
+  <button class="normal toggleBtn" type="button" onclick="toggleSunLens()">
+    Show / Hide Sun Lens Catalogue
+  </button>
+
+  <div id="sunLensContainer" style="display:none; margin-top:12px;">
+    <img
+      src="https://sp-rx.github.io/OL-selector/Lens_Catalogue/Sun_lens.jpg"
+      alt="Sun Lens Catalogue"
+      style="width:100%; height:auto; display:block;"
+    >
+  </div>
 
 </div>
+
+<script>
+function toggleSunLens() {
+  const container = document.getElementById("sunLensContainer");
+
+  container.style.display =
+    container.style.display === "none" ? "block" : "none";
+}
+</script>
+	
+
 
 
 <div id="lensSet">
